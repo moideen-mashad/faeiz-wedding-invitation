@@ -217,11 +217,6 @@
     50% { transform: scale(1.05); opacity: 1; }
   }
 
-  .page-number-tag {
-    font-size: 8.5px; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--ink-accent); opacity: 0.65; margin-bottom: 4px;
-  }
-
   .section-heading-serif {
     font-family: 'Cormorant Garamond', serif; font-size: 25px;
     font-style: italic; color: var(--ink-dark); margin-bottom: 2px;
@@ -309,22 +304,24 @@
     color: var(--paper-light);
   }
 
-  /* Floating Bottom Navigation Bar */
+  /* Sleek Floating Bottom Mobile Swipe Pagination Bar (No Numbers) */
   .booklet-nav-bar {
-    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-    z-index: 90; display: flex; align-items: center; gap: 12px;
-    background: rgba(28, 23, 19, 0.92); padding: 7px 20px; border-radius: 40px;
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    z-index: 90; display: flex; align-items: center; gap: 14px;
+    background: rgba(28, 23, 19, 0.92); padding: 8px 22px; border-radius: 40px;
     border: 1px solid rgba(212, 171, 110, 0.4); backdrop-filter: blur(12px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.65);
   }
 
-  .nav-dots { display: flex; gap: 7px; align-items: center; }
+  .nav-dots { display: flex; gap: 8px; align-items: center; }
   .nav-dot {
     width: 8px; height: 8px; border-radius: 50%; background: rgba(245, 238, 228, 0.35);
-    cursor: pointer; transition: all 0.3s ease;
+    cursor: pointer; transition: all 0.35s var(--ease-smooth);
   }
-  .nav-dot.active, .nav-dot:hover {
-    background: var(--gold-bright); transform: scale(1.3);
+  .nav-dot.active {
+    width: 22px; height: 8px; border-radius: 10px;
+    background: var(--gold-bright);
+    box-shadow: 0 0 10px rgba(212, 171, 110, 0.6);
   }
 
   .nav-arrow-btn {
@@ -333,10 +330,6 @@
     transition: all 0.25s ease;
   }
   .nav-arrow-btn:hover { color: var(--gold-bright); transform: scale(1.2); }
-  
-  .page-indicator-text {
-    font-size: 10.5px; letter-spacing: 0.18em; color: var(--paper-light); font-family: 'Jost', sans-serif;
-  }
 
   /* Mobile Responsiveness & Touch Adjustments */
   @media (max-width: 480px) {
@@ -361,7 +354,7 @@
     .cd-val { font-size: 16px; }
 
     .botanical-stem { width: 85px; opacity: 0.6; }
-    .booklet-nav-bar { bottom: 10px; padding: 6px 14px; gap: 8px; }
+    .booklet-nav-bar { bottom: 12px; padding: 7px 18px; gap: 12px; }
   }
 </style>
 </head>
@@ -411,7 +404,7 @@
         </div>
         <div class="cover-tap-prompt" onclick="scrollToSlide(2)">
           <div class="tap-seal-btn">F&amp;R</div>
-          <div class="tap-text" data-en="SWIPE / EXPLORE ↓" data-ar="اسحب / استكشف ↓">SWIPE / EXPLORE ↓</div>
+          <div class="tap-text" data-en="SWIPE TO VIEW ↓" data-ar="اسحب للعرض ↓">SWIPE TO VIEW ↓</div>
         </div>
       </div>
     </div>
@@ -424,7 +417,6 @@
       <div class="deckle-border"></div>
       <div class="page-inner-content">
         <div>
-          <div class="page-number-tag">PAGE II · NIKAH</div>
           <div class="eyebrow-label" data-en="REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR NIKAH CEREMONY" data-ar="يتشرفون بدعوتكم لحضور حفل النكاح">
             REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR NIKAH CEREMONY
           </div>
@@ -440,7 +432,7 @@
           <div class="location-venue-name" data-en="Chemmatila Juma Masjid" data-ar="جامع شمطيلة">Chemmatila Juma Masjid</div>
           <div class="location-address" data-en="Kunhimangalam, Kannur" data-ar="كونهيمانجالام، كانور">Kunhimangalam, Kannur</div>
         </div>
-        <div><div class="script" style="font-size: 26px; color: var(--gold-accent);">Faeiz &amp; Rhiya</div></div>
+        <div><div class="script" style="font-size: 28px; color: var(--gold-accent);">Faeiz &amp; Rhiya</div></div>
       </div>
     </div>
   </div>
@@ -452,7 +444,6 @@
       <div class="deckle-border"></div>
       <div class="page-inner-content">
         <div>
-          <div class="page-number-tag">PAGE III · RECEPTION</div>
           <div class="section-heading-serif" data-en="Wedding Reception" data-ar="حفل الاستقبال">Wedding Reception</div>
           <div class="ornament-divider"><div class="ornament-line"></div><div class="ornament-flower">❀</div><div class="ornament-line"></div></div>
         </div>
@@ -486,7 +477,6 @@
       <div class="deckle-border"></div>
       <div class="page-inner-content">
         <div style="width:100%;">
-          <div class="page-number-tag">PAGE IV · LOCATION</div>
           <div class="section-heading-serif" data-en="Venue &amp; Directions" data-ar="موقع الحفل والاتجاهات">Venue &amp; Directions</div>
           <div class="ornament-divider"><div class="ornament-line"></div><div class="ornament-flower">❀</div><div class="ornament-line"></div></div>
         </div>
@@ -520,7 +510,7 @@
 
 </div>
 
-<!-- FLOATING NAV BAR -->
+<!-- FLOATING MOBILE SWIPE PAGINATION BAR (NO NUMBERS) -->
 <div class="booklet-nav-bar" id="navBar">
   <button class="nav-arrow-btn" onclick="scrollToPrevSlide()">❮</button>
   <div class="nav-dots">
@@ -529,7 +519,6 @@
     <span class="nav-dot" id="dot3" onclick="scrollToSlide(3)"></span>
     <span class="nav-dot" id="dot4" onclick="scrollToSlide(4)"></span>
   </div>
-  <div class="page-indicator-text" id="pageIndicator">PAGE 1 OF 4</div>
   <button class="nav-arrow-btn" onclick="scrollToNextSlide()">❯</button>
 </div>
 
@@ -592,7 +581,6 @@
     const index = Math.round(scrollPos / slideHeight) + 1;
     if (index >= 1 && index <= 4 && index !== activeSlideNum) {
       activeSlideNum = index;
-      document.getElementById('pageIndicator').textContent = `PAGE ${index} OF 4`;
       for (let i = 1; i <= 4; i++) {
         const dot = document.getElementById('dot' + i);
         if (dot) dot.classList.toggle('active', i === index);
