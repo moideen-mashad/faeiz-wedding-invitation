@@ -119,9 +119,9 @@
   .book-page-2d {
     position: relative;
     width: 100%;
-    max-width: 440px;
+    max-width: 450px;
     height: 100%;
-    max-height: 590px;
+    max-height: 610px;
     background: var(--paper-base);
     border-radius: 12px;
     box-shadow: inset 0 0 35px rgba(140, 106, 67, 0.15), 0 20px 50px rgba(0,0,0,0.6);
@@ -150,50 +150,50 @@
   }
 
   .botanical-stem {
-    position: absolute; bottom: 12px; right: 12px; width: 110px; height: auto;
+    position: absolute; bottom: 12px; right: 12px; width: 115px; height: auto;
     pointer-events: none; opacity: 0.85; filter: drop-shadow(2px 4px 6px rgba(90,66,36,0.15));
   }
 
   .cover-content, .page-inner-content {
     height: 100%; width: 100%;
-    padding: 26px 20px;
+    padding: 28px 22px;
     display: flex; flex-direction: column;
     justify-content: space-between; align-items: center;
     position: relative; z-index: 5; text-align: center;
   }
 
   .quran-header-arabic {
-    font-family: 'Amiri', serif; font-size: 22px; color: var(--ink-dark);
+    font-family: 'Amiri', serif; font-size: 27px; color: var(--ink-dark);
     margin-bottom: 4px; font-weight: 700; line-height: 1.4;
   }
   .quran-translation {
-    font-size: 12px; font-style: italic; color: var(--ink-mid);
-    margin-bottom: 2px; font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; font-style: italic; color: var(--ink-mid);
+    margin-bottom: 3px; font-family: 'Cormorant Garamond', serif;
   }
   .quran-surah {
-    font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--ink-accent); opacity: 0.8;
+    font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-accent); opacity: 0.85;
   }
 
   .ornament-divider {
-    display: flex; align-items: center; gap: 10px; width: 75%; margin: 6px auto;
+    display: flex; align-items: center; gap: 12px; width: 80%; margin: 8px auto;
   }
-  .ornament-line { flex: 1; height: 1px; background: var(--gold-accent); opacity: 0.6; }
-  .ornament-flower { font-size: 11px; color: var(--gold-accent); }
+  .ornament-line { flex: 1; height: 1px; background: var(--gold-accent); opacity: 0.65; }
+  .ornament-flower { font-size: 12px; color: var(--gold-accent); }
 
   .eyebrow-label {
-    font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--ink-accent); margin: 4px 0;
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-accent); margin: 6px 0; font-weight: 400;
   }
 
   .couple-title-main {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 40px; font-weight: 500; color: var(--ink-dark);
-    line-height: 1.05; margin: 4px 0;
+    font-size: 48px; font-weight: 500; color: var(--ink-dark);
+    line-height: 1.05; margin: 6px 0;
   }
   .couple-ampersand {
-    font-family: 'Alex Brush', cursive; font-size: 36px; color: var(--gold-accent);
-    display: block; margin: -4px 0; font-weight: 400;
+    font-family: 'Alex Brush', cursive; font-size: 44px; color: var(--gold-accent);
+    display: block; margin: -6px 0; font-weight: 400;
   }
 
   /* Bouncing Scroll Cue on Cover */
@@ -203,20 +203,20 @@
     cursor: pointer;
   }
   .tap-seal-btn {
-    width: 48px; height: 48px; border-radius: 50%;
+    width: 52px; height: 52px; border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #d4ab6e, #8c6a43 70%, #4a3825);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 5px 15px rgba(74, 56, 37, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
     border: 1px solid var(--gold-bright);
     color: var(--paper-light); font-family: 'Cormorant Garamond', serif;
-    font-size: 16px; font-weight: 600;
+    font-size: 17px; font-weight: 600;
   }
   .tap-text {
-    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-accent);
-    display: flex; align-items: center; gap: 4px;
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-accent);
+    display: flex; align-items: center; gap: 4px; font-weight: 400;
   }
   .bounce-arrow {
-    font-size: 12px; color: var(--gold-accent);
+    font-size: 13px; color: var(--gold-accent);
     animation: bounceDown 1.8s infinite ease-in-out;
   }
 
@@ -226,66 +226,67 @@
   }
 
   .section-heading-serif {
-    font-family: 'Cormorant Garamond', serif; font-size: 25px;
-    font-style: italic; color: var(--ink-dark); margin-bottom: 2px;
+    font-family: 'Cormorant Garamond', serif; font-size: 29px;
+    font-style: italic; color: var(--ink-dark); margin-bottom: 3px; font-weight: 600;
   }
 
   .event-card-box {
     background: rgba(239, 229, 213, 0.65);
     border: 1px solid var(--border-line);
-    border-radius: 6px; padding: 14px 12px; margin: 6px 0;
+    border-radius: 8px; padding: 16px 14px; margin: 8px 0;
     position: relative; width: 100%;
   }
   .event-title-badge {
-    font-size: 10.5px; letter-spacing: 0.28em; text-transform: uppercase;
-    font-weight: 600; color: var(--ink-accent); margin-bottom: 6px;
+    font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink-accent); margin-bottom: 8px;
     display: inline-block; padding-bottom: 2px; border-bottom: 1px solid var(--gold-accent);
   }
 
   .event-datetime-grid {
-    display: flex; justify-content: center; align-items: center; gap: 12px;
-    margin: 6px 0;
+    display: flex; justify-content: center; align-items: center; gap: 14px;
+    margin: 8px 0;
   }
   .datetime-col { text-align: center; }
-  .datetime-col .day-name { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mid); }
-  .datetime-col .date-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; color: var(--ink-dark); line-height: 1; }
-  .datetime-col .month-year { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); }
-  .datetime-col .time-text { font-size: 11px; font-weight: 500; color: var(--ink-dark); }
-  .datetime-divider { width: 1px; height: 30px; background: var(--border-line); }
+  .datetime-col .day-name { font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mid); font-weight: 500; }
+  .datetime-col .date-num { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 600; color: var(--ink-dark); line-height: 1; }
+  .datetime-col .month-year { font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mid); font-weight: 500; }
+  .datetime-col .time-text { font-size: 12.5px; font-weight: 500; color: var(--ink-dark); }
+  .datetime-divider { width: 1px; height: 34px; background: var(--border-line); }
 
   .location-venue-name {
-    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600;
-    color: var(--ink-dark); margin-top: 4px;
+    font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600;
+    color: var(--ink-dark); margin-top: 6px;
   }
   .location-address {
-    font-size: 11px; color: var(--ink-mid); margin-top: 2px; line-height: 1.35;
+    font-size: 12.5px; color: var(--ink-mid); margin-top: 3px; line-height: 1.4;
   }
 
   .countdown-row {
-    display: flex; justify-content: center; gap: 6px; margin: 8px 0;
+    display: flex; justify-content: center; gap: 8px; margin: 10px 0;
   }
   .cd-box {
-    width: 54px; padding: 7px 3px; background: var(--paper-light);
-    border: 1px solid var(--border-line); border-radius: 4px;
+    width: 58px; padding: 8px 4px; background: var(--paper-light);
+    border: 1px solid var(--border-line); border-radius: 6px;
   }
-  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--ink-dark); }
-  .cd-lbl { font-size: 7px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-accent); }
+  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--ink-dark); }
+  .cd-lbl { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-accent); font-weight: 500; }
 
-  /* Full Venue Image Container - No Crop, Fits Resolution Perfectly */
+  /* Venue Image Frame - Tight Aspect Ratio Wrapper (No Blank Side Margins) */
   .venue-image-frame {
-    width: 100%;
-    max-width: 330px;
-    margin: 4px auto;
+    display: inline-block;
+    max-width: 100%;
+    margin: 6px auto;
     background: var(--paper-base);
-    border-radius: 6px;
-    padding: 4px;
+    border-radius: 8px;
+    padding: 5px;
     border: 1px solid var(--gold-accent);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.14);
   }
   .venue-image-frame img {
-    width: 100%;
+    width: auto;
     height: auto;
-    max-height: 180px;
+    max-height: 210px;
+    max-width: 100%;
     object-fit: contain;
     border-radius: 4px;
     display: block;
@@ -295,12 +296,12 @@
 
   .maps-btn-pill {
     display: inline-block;
-    padding: 7px 20px;
+    padding: 8px 22px;
     border: 1px solid var(--ink-dark);
     border-radius: 20px;
     color: var(--ink-dark);
     text-decoration: none;
-    font-size: 9px;
+    font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-weight: 500;
@@ -347,27 +348,26 @@
 
   /* Mobile Responsiveness & Touch Adjustments */
   @media (max-width: 480px) {
-    .carousel-slide { padding: 50px 10px 65px 10px; }
-    .book-page-2d { max-height: 570px; }
-    .cover-content, .page-inner-content { padding: 20px 14px; }
+    .carousel-slide { padding: 48px 8px 65px 8px; }
+    .book-page-2d { max-height: 580px; }
+    .cover-content, .page-inner-content { padding: 22px 14px; }
     
-    .quran-header-arabic { font-size: 18px; }
-    .couple-title-main { font-size: 32px; }
-    .couple-ampersand { font-size: 30px; }
-    .section-heading-serif { font-size: 21px; }
+    .quran-header-arabic { font-size: 22px; }
+    .couple-title-main { font-size: 38px; }
+    .couple-ampersand { font-size: 36px; }
+    .section-heading-serif { font-size: 24px; }
 
-    .venue-image-frame { max-width: 100%; }
-    .venue-image-frame img { max-height: 150px; }
+    .venue-image-frame img { max-height: 175px; }
     
-    .event-card-box { padding: 10px 8px; margin: 4px 0; }
-    .datetime-col .date-num { font-size: 24px; }
-    .location-venue-name { font-size: 14px; }
+    .event-card-box { padding: 12px 10px; margin: 6px 0; }
+    .datetime-col .date-num { font-size: 28px; }
+    .location-venue-name { font-size: 16px; }
 
-    .countdown-row { gap: 4px; }
-    .cd-box { width: 44px; padding: 5px 2px; }
-    .cd-val { font-size: 16px; }
+    .countdown-row { gap: 5px; }
+    .cd-box { width: 48px; padding: 6px 2px; }
+    .cd-val { font-size: 19px; }
 
-    .botanical-stem { width: 85px; opacity: 0.6; }
+    .botanical-stem { width: 90px; opacity: 0.65; }
     .bottom-scroll-navbar { bottom: 12px; padding: 4px 6px; gap: 2px; }
     .nav-tab-btn { padding: 5px 10px; font-size: 10px; }
     .tab-label { font-size: 10px; }
@@ -444,12 +444,12 @@
           <div class="event-datetime-grid">
             <div class="datetime-col"><div class="day-name" data-en="FRIDAY" data-ar="الجمعة">FRIDAY</div><div class="date-num">14</div></div>
             <div class="datetime-divider"></div>
-            <div class="datetime-col"><div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div><div class="time-text" data-en="AT 4:00 PM" data-ar="الساعة ٤:٠٠ عصراً">AT 4:00 PM</div></div>
+            <div class="datetime-col"><div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div><div class="time-text" data-en="AT 4:00 PM" data-ar="الساعة ٤:٠0 عصراً">AT 4:00 PM</div></div>
           </div>
           <div class="location-venue-name" data-en="Chemmatila Juma Masjid" data-ar="جامع شمطيلة">Chemmatila Juma Masjid</div>
           <div class="location-address" data-en="Kunhimangalam, Kannur" data-ar="كونهيمانجالام، كانور">Kunhimangalam, Kannur</div>
         </div>
-        <div><div class="script" style="font-size: 28px; color: var(--gold-accent);">Faeiz &amp; Rhiya</div></div>
+        <div><div class="script" style="font-size: 32px; color: var(--gold-accent);">Faeiz &amp; Rhiya</div></div>
       </div>
     </div>
   </div>
@@ -475,7 +475,7 @@
           <div class="location-address" data-en="Angadi, Kunhimangalam, Kannur" data-ar="عنقادي، كونهيمانجالام، كانور">Angadi, Kunhimangalam, Kannur</div>
         </div>
         <div>
-          <div style="font-size: 8.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-accent);" data-en="COUNTDOWN TO CELEBRATION" data-ar="العد التنازلي للحفل">COUNTDOWN TO CELEBRATION</div>
+          <div style="font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-accent);" data-en="COUNTDOWN TO CELEBRATION" data-ar="العد التنازلي للحفل">COUNTDOWN TO CELEBRATION</div>
           <div class="countdown-row">
             <div class="cd-box"><div class="cd-val" id="cd-days">00</div><div class="cd-lbl" data-en="DAYS" data-ar="أيام">DAYS</div></div>
             <div class="cd-box"><div class="cd-val" id="cd-hours">00</div><div class="cd-lbl" data-en="HOURS" data-ar="ساعات">HOURS</div></div>
@@ -487,7 +487,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 4: VENUE & DIRECTIONS (FULL IMAGE UNCROPPED) -->
+  <!-- SLIDE 4: VENUE & DIRECTIONS (FULL IMAGE UNCROPPED, TIGHT ASPECT RATIO FRAME) -->
   <div class="carousel-slide" id="slide4">
     <div class="book-page-2d" id="page4">
       <div class="paper-texture"></div>
@@ -499,7 +499,7 @@
         </div>
         
         <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:6px;">
-          <!-- FULL VENUE IMAGE - NO CROP, FITS SCREEN RESOLUTION -->
+          <!-- VENUE IMAGE FRAME - FITS ASPECT RATIO TIGHTLY (NO BLANK SIDEBARS) -->
           <div class="venue-image-frame">
             <img src="venue.jpeg" alt="Zainaba Manil Venue Image">
           </div>
@@ -508,16 +508,16 @@
             <a class="maps-btn-pill" href="https://maps.google.com" target="_blank" rel="noopener" data-en="VIEW ON GOOGLE MAPS" data-ar="عرض على خرائط جوجل">VIEW ON GOOGLE MAPS</a>
           </div>
 
-          <div class="event-card-box" style="width:100%; padding:8px 10px; margin:2px 0;">
-            <div class="location-address" style="font-size:10.5px; margin-top:0;" data-en="Chemmatila &amp; Zainaba Manil<br>Kunhimangalam, Kannur" data-ar="شمطيلة وزينبة منيل<br>كونهيمانجالام، كانور">
+          <div class="event-card-box" style="width:100%; padding:10px 12px; margin:2px 0;">
+            <div class="location-address" style="font-size:12px; margin-top:0;" data-en="Chemmatila &amp; Zainaba Manil<br>Kunhimangalam, Kannur" data-ar="شمطيلة وزينبة منيل<br>كونهيمانجالام، كانور">
               Chemmatila &amp; Zainaba Manil<br>Kunhimangalam, Kannur
             </div>
           </div>
         </div>
 
         <div style="width:100%;">
-          <div class="script" style="font-size: 22px; color: var(--gold-accent);">Insha'Allah</div>
-          <div style="font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); margin-top: 1px;" data-en="LOOKING FORWARD TO CELEBRATING WITH YOU" data-ar="نتطلع للاحتفال معكم">
+          <div class="script" style="font-size: 26px; color: var(--gold-accent);">Insha'Allah</div>
+          <div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); margin-top: 1px;" data-en="LOOKING FORWARD TO CELEBRATING WITH YOU" data-ar="نتطلع للاحتفال معكم">
             LOOKING FORWARD TO CELEBRATING WITH YOU
           </div>
         </div>
