@@ -194,14 +194,36 @@
     color: var(--ink-accent); margin: 6px 0; font-weight: 400;
   }
 
+  /* Luxury Glowing Fluid Shimmer Gold Text Effect for Cover Names */
   .couple-title-main {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 48px; font-weight: 500; color: var(--ink-dark);
+    font-size: 50px; font-weight: 600;
     line-height: 1.05; margin: 6px 0;
+    background: linear-gradient(135deg, #4a3825 0%, #b08953 25%, #fff3db 50%, #d4ab6e 75%, #4a3825 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: goldFluidShimmer 6s ease-in-out infinite alternate;
+    text-shadow: 0 0 20px rgba(212, 171, 110, 0.25);
+    filter: drop-shadow(0 2px 8px rgba(176, 137, 83, 0.3));
   }
+
   .couple-ampersand {
-    font-family: 'Alex Brush', cursive; font-size: 44px; color: var(--gold-accent);
+    font-family: 'Alex Brush', cursive; font-size: 46px;
     display: block; margin: -6px 0; font-weight: 400;
+    color: var(--gold-bright);
+    text-shadow: 0 0 12px rgba(212, 171, 110, 0.6), 0 0 25px rgba(212, 171, 110, 0.3);
+    animation: goldPulseGlow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes goldFluidShimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  @keyframes goldPulseGlow {
+    0% { filter: drop-shadow(0 0 2px rgba(212, 171, 110, 0.4)); }
+    100% { filter: drop-shadow(0 0 10px rgba(212, 171, 110, 0.8)); }
   }
 
   /* Bouncing Scroll Cue on Cover */
@@ -343,10 +365,10 @@
     opacity: 0.8;
   }
 
-  .nav-tab-btn.active, .nav-tab-btn:hover {
-    background: var(--gold-accent);
-    color: #ffffff;
-    opacity: 1;
+  .nav-tab-btn.active {
+    background: var(--gold-accent) !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
     font-weight: 500;
     box-shadow: 0 4px 12px rgba(176, 137, 83, 0.4);
   }
@@ -475,7 +497,7 @@
           <div class="event-datetime-grid">
             <div class="datetime-col"><div class="day-name" data-en="SUNDAY" data-ar="الأحد">SUNDAY</div><div class="date-num">16</div></div>
             <div class="datetime-divider"></div>
-            <div class="datetime-col"><div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div><div class="time-text" data-en="AT 12:00 PM" data-ar="الساعة ١٢:٠٠ ظهراً">AT 12:00 PM</div></div>
+            <div class="datetime-col"><div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div><div class="time-text" data-en="AT 12:00 PM" data-ar="الساعة ١٢:٠0 ظهراً">AT 12:00 PM</div></div>
           </div>
           <div class="location-venue-name" data-en="Zainaba Manil" data-ar="زينبة منيل">Zainaba Manil</div>
           <div class="location-address" data-en="Angadi, Kunhimangalam, Kannur" data-ar="عنقادي، كونهيمانجالام، كانور">Angadi, Kunhimangalam, Kannur</div>
@@ -533,7 +555,7 @@
 
 </div>
 
-<!-- PRACTISED MOBILE UI/UX BOTTOM NAVIGATION TAB BAR (CLEAN WHITE SVG ICONS) -->
+<!-- PRACTISED MOBILE UI/UX BOTTOM NAVIGATION TAB BAR (STRICT SINGLE ACTIVE TAB) -->
 <div class="bottom-scroll-navbar" id="navBar">
   <button class="nav-tab-btn active" id="tab1" onclick="scrollToSlide(1)">
     <svg class="tab-icon-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -594,24 +616,33 @@
     render();
   })();
 
+  function updateActiveTab(index) {
+    activeSlideNum = index;
+    const tabs = document.querySelectorAll('.nav-tab-btn');
+    tabs.forEach((tab, idx) => {
+      if (idx + 1 === index) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    });
+  }
+
   function scrollToSlide(num) {
     const slide = document.getElementById('slide' + num);
     if (slide) {
+      updateActiveTab(num);
       slide.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
 
-  // Detect active slide on scroll snap and update bottom navigation tabs
+  // Detect active slide on scroll snap and strictly highlight ONLY the single active tab
   viewport.addEventListener('scroll', () => {
     const scrollPos = viewport.scrollTop;
     const slideHeight = viewport.clientHeight;
-    const index = Math.round(scrollPos / slideHeight) + 1;
+    const index = Math.round((scrollPos + slideHeight / 2) / slideHeight) + 1;
     if (index >= 1 && index <= 4 && index !== activeSlideNum) {
-      activeSlideNum = index;
-      for (let i = 1; i <= 4; i++) {
-        const tab = document.getElementById('tab' + i);
-        if (tab) tab.classList.toggle('active', i === index);
-      }
+      updateActiveTab(index);
     }
   });
 
@@ -623,15 +654,6 @@
       if (activeSlideNum > 1) scrollToSlide(activeSlideNum - 1);
     }
   });
-
-  /* COMMENTED MUSIC TOGGLE FUNCTION
-  function toggleAudio() {
-    const audio = document.getElementById('bgMusic');
-    const label = document.getElementById('audioLabel');
-    if (isAudioPlaying) { audio.pause(); label.textContent = "Music"; isAudioPlaying = false; }
-    else { audio.play().catch(() => {}); label.textContent = "Playing"; isAudioPlaying = true; }
-  }
-  */
 
   function setLanguage(lang) {
     const html = document.getElementById('htmlRoot');
