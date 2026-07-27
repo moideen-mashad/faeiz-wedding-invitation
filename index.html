@@ -289,17 +289,18 @@
   .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--ink-dark); }
   .cd-lbl { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-accent); font-weight: 500; }
 
-  /* Venue Image Frame - ENLARGED WITH TAP TO ZOOM LIGHTBOX */
+  /* Venue Image Frame - TIGHT FIT TO IMAGE ASPECT RATIO (NO BLANK SIDEBARS) */
   .venue-image-frame {
     position: relative;
     display: inline-block;
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     margin: 2px auto;
     background: var(--paper-base);
-    border-radius: 10px;
-    padding: 6px;
+    border-radius: 8px;
+    padding: 5px;
     border: 1px solid var(--gold-accent);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.16);
     cursor: pointer;
     transition: transform 0.3s ease;
   }
@@ -307,20 +308,21 @@
     transform: scale(1.02);
   }
   .venue-image-frame img {
-    width: 100%;
+    width: auto;
     height: auto;
-    max-height: 240px;
+    max-height: 235px;
+    max-width: 100%;
     object-fit: contain;
-    border-radius: 6px;
+    border-radius: 4px;
     display: block;
     border: 1px solid var(--border-line);
     filter: sepia(0.65) contrast(1.15) saturate(0.7);
   }
   .zoom-hint-badge {
-    position: absolute; bottom: 12px; right: 12px;
+    position: absolute; bottom: 10px; right: 10px;
     background: rgba(28, 23, 19, 0.85); color: var(--paper-light);
-    padding: 3px 8px; border-radius: 12px; font-size: 9px;
-    letter-spacing: 0.1em; font-weight: 500; display: flex; align-items: center; gap: 4px;
+    padding: 3px 8px; border-radius: 12px; font-size: 8.5px;
+    letter-spacing: 0.08em; font-weight: 500; display: flex; align-items: center; gap: 4px;
     backdrop-filter: blur(4px); border: 1px solid rgba(212, 171, 110, 0.4);
   }
 
@@ -417,7 +419,7 @@
     .couple-ampersand { font-size: 36px; }
     .section-heading-serif { font-size: 24px; }
 
-    .venue-image-frame img { max-height: 205px; }
+    .venue-image-frame img { max-height: 200px; }
     
     .event-card-box { padding: 14px 12px; margin: 2px 0; }
     .datetime-col .date-num { font-size: 28px; }
@@ -545,7 +547,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 4: VENUE & DIRECTIONS (ENLARGED IMAGE WITH TAP TO ZOOM LIGHTBOX) -->
+  <!-- SLIDE 4: VENUE & DIRECTIONS (TIGHT GOLD FRAME MATCHING PHOTO ASPECT RATIO) -->
   <div class="carousel-slide" id="slide4">
     <div class="book-page-2d" id="page4">
       <div class="paper-texture"></div>
@@ -557,7 +559,7 @@
         </div>
         
         <div style="width:100%; display:flex; flex-direction:column; align-items:center; gap:6px;">
-          <!-- VENUE IMAGE FRAME - ENLARGED + TAP TO ZOOM LIGHTBOX -->
+          <!-- VENUE IMAGE FRAME - TIGHT GOLD BORDER FIT TO IMAGE ASPECT RATIO -->
           <div class="venue-image-frame" onclick="openVenueLightbox()">
             <img src="venue.jpeg" alt="Zainaba Manil Venue Image">
             <div class="zoom-hint-badge">
