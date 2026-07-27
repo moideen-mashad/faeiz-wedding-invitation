@@ -294,6 +294,22 @@
   .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--ink-dark); }
   .cd-lbl { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-accent); font-weight: 600; }
 
+  /* Botanical Watermark Background for pages */
+  .botanical-watermark {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.045;
+  }
+  .botanical-watermark svg {
+    width: 85%;
+    height: 85%;
+  }
+
   /* Venue Image Frame - TIGHT FIT TO IMAGE ASPECT RATIO */
   .venue-image-frame {
     position: relative;
@@ -504,7 +520,60 @@
     <div class="book-page-2d" id="page2">
       <div class="paper-texture"></div>
       <div class="deckle-border"></div>
-      <div class="page-inner-content">
+      <!-- Large Botanical Watermark Background -->
+      <div class="botanical-watermark">
+        <svg viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Central large rose bloom -->
+          <circle cx="200" cy="250" r="70" stroke="#8c6a43" stroke-width="1.2" fill="none"/>
+          <circle cx="200" cy="250" r="50" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <circle cx="200" cy="250" r="30" stroke="#8c6a43" stroke-width="0.6" fill="none"/>
+          <!-- Rose petals outer ring -->
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(0 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(45 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(90 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(135 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(180 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(225 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(270 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(315 200 250)"/>
+          <!-- Inner petals -->
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(0 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(60 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(120 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(180 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(240 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(300 200 250)"/>
+          <!-- Corner botanical sprigs top-left -->
+          <path d="M 30 30 Q 60 50 50 90" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <path d="M 50 30 Q 40 60 70 80" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="38" cy="38" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-30 38 38)"/>
+          <ellipse cx="58" cy="52" rx="8" ry="13" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(20 58 52)"/>
+          <!-- Corner botanical sprigs top-right -->
+          <path d="M 370 30 Q 340 50 350 90" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <path d="M 350 30 Q 360 60 330 80" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="362" cy="38" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(30 362 38)"/>
+          <ellipse cx="342" cy="52" rx="8" ry="13" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-20 342 52)"/>
+          <!-- Corner botanical sprigs bottom-left -->
+          <path d="M 30 470 Q 60 450 50 410" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <path d="M 50 470 Q 40 440 70 420" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="38" cy="462" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(30 38 462)"/>
+          <ellipse cx="58" cy="448" rx="8" ry="13" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-20 58 448)"/>
+          <!-- Corner botanical sprigs bottom-right -->
+          <path d="M 370 470 Q 340 450 350 410" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <path d="M 350 470 Q 360 440 330 420" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="362" cy="462" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-30 362 462)"/>
+          <ellipse cx="342" cy="448" rx="8" ry="13" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(20 342 448)"/>
+          <!-- Side leaf sprigs left -->
+          <path d="M 20 220 Q 55 240 45 280" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="28" cy="245" rx="9" ry="18" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-40 28 245)"/>
+          <ellipse cx="42" cy="265" rx="7" ry="13" stroke="#8c6a43" stroke-width="0.6" fill="none" transform="rotate(10 42 265)"/>
+          <!-- Side leaf sprigs right -->
+          <path d="M 380 220 Q 345 240 355 280" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="372" cy="245" rx="9" ry="18" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(40 372 245)"/>
+          <ellipse cx="358" cy="265" rx="7" ry="13" stroke="#8c6a43" stroke-width="0.6" fill="none" transform="rotate(-10 358 265)"/>
+        </svg>
+      </div>
+      <div class="page-inner-content" style="position:relative; z-index:2;">
         <div>
           <div class="eyebrow-label" data-en="REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR NIKAH CEREMONY" data-ar="يتشرفون بدعوتكم لحضور حفل النكاح">
             REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR NIKAH CEREMONY
@@ -531,7 +600,40 @@
     <div class="book-page-2d" id="page3">
       <div class="paper-texture"></div>
       <div class="deckle-border"></div>
-      <div class="page-inner-content">
+      <!-- Large Botanical Watermark Background -->
+      <div class="botanical-watermark">
+        <svg viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="250" r="70" stroke="#8c6a43" stroke-width="1.2" fill="none"/>
+          <circle cx="200" cy="250" r="50" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <circle cx="200" cy="250" r="30" stroke="#8c6a43" stroke-width="0.6" fill="none"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(0 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(45 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(90 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(135 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(225 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(270 200 250)"/>
+          <ellipse cx="200" cy="178" rx="22" ry="40" stroke="#8c6a43" stroke-width="1" fill="none" transform="rotate(315 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(0 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(60 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(120 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(180 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(240 200 250)"/>
+          <ellipse cx="200" cy="210" rx="14" ry="26" stroke="#8c6a43" stroke-width="0.8" fill="none" transform="rotate(300 200 250)"/>
+          <path d="M 30 30 Q 60 50 50 90" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="38" cy="38" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-30 38 38)"/>
+          <path d="M 370 30 Q 340 50 350 90" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="362" cy="38" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(30 362 38)"/>
+          <path d="M 30 470 Q 60 450 50 410" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="38" cy="462" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(30 38 462)"/>
+          <path d="M 370 470 Q 340 450 350 410" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="362" cy="462" rx="10" ry="16" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-30 362 462)"/>
+          <path d="M 20 220 Q 55 240 45 280" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="28" cy="245" rx="9" ry="18" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(-40 28 245)"/>
+          <path d="M 380 220 Q 345 240 355 280" stroke="#8c6a43" stroke-width="0.8" fill="none"/>
+          <ellipse cx="372" cy="245" rx="9" ry="18" stroke="#8c6a43" stroke-width="0.7" fill="none" transform="rotate(40 372 245)"/>
+        </svg>
+      </div>
+      <div class="page-inner-content" style="position:relative; z-index:2;">
         <div>
           <div class="section-heading-serif" data-en="Wedding Reception" data-ar="حفل الاستقبال">Wedding Reception</div>
           <div class="ornament-divider"><div class="ornament-line"></div><div class="ornament-flower">❀</div><div class="ornament-line"></div></div>
