@@ -18,10 +18,9 @@
     --ink-accent:    #8c6a43;
     --gold-accent:   #b08953;
     --gold-bright:   #d4ab6e;
-    --twine:         #a68b63;
     --border-line:   #d8c7b0;
-    --bg-stage:      #1a1511;
-    --cover-bg:      #3d2d1e;
+    --dark-cocoa:    #3d2d1e;
+    --dark-cocoa-2:  #291e14;
     --ease-smooth:   cubic-bezier(.25, 1, .35, 1);
   }
 
@@ -41,11 +40,12 @@
   .serif { font-family: 'Cormorant Garamond', serif; }
   .script { font-family: 'Alex Brush', cursive; }
   .script-allura { font-family: 'Allura', cursive; }
+  .stamp { font-family: 'Marcellus', serif; }
 
-  /* Ambient Particle Canvas */
+  /* Ambient Canvas */
   #particles-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
 
-  /* Floating Top Navigation Switcher Bar */
+  /* Top Navigation Switcher */
   .design-switcher-bar {
     position: fixed; top: 20px; left: 20px; z-index: 100;
     display: flex; gap: 6px; background: rgba(28, 23, 19, 0.85);
@@ -74,7 +74,7 @@
   .control-btn:hover { background: var(--paper-light); color: var(--ink-accent); transform: translateY(-2px); }
 
   /* ============================================================
-     INTRO MODAL COVER SCENE
+     COVER INTRO MODAL
      ============================================================ */
   #coverModal {
     position: fixed; inset: 0; z-index: 60;
@@ -96,16 +96,11 @@
     display: flex; flex-direction: column; align-items: center; justify-content: space-between;
     text-align: center; color: #e8d4a8;
   }
-
   .cover-inner-border-outer { position: absolute; inset: 16px; border: 1px solid rgba(212,165,116,0.35); pointer-events: none; }
   .cover-inner-border-inner { position: absolute; inset: 22px; border: 1px solid rgba(212,165,116,0.2); pointer-events: none; }
 
   .cover-eyebrow-text { font-size: 10px; letter-spacing: 0.55em; text-transform: uppercase; color: rgba(232,212,168,0.75); }
-
-  .cover-monogram-text {
-    font-family: 'Allura', cursive; font-size: clamp(54px, 14vw, 84px);
-    color: #e0c896; line-height: 1; margin: 10px 0;
-  }
+  .cover-monogram-text { font-family: 'Allura', cursive; font-size: clamp(54px, 14vw, 84px); color: #e0c896; line-height: 1; margin: 10px 0; }
   .cover-monogram-amp { color: #d4a574; font-size: 0.75em; margin: 0 4px; }
 
   .open-invitation-btn {
@@ -117,124 +112,176 @@
   .open-invitation-btn:hover { color: #352619; background: #e8d4a8; transform: translateY(-2px); }
 
   /* ============================================================
-     IMPROVED SCROLLABLE BOTANICAL INVITATION BODY
+     MAIN OPENED INVITATION PAGE (Matching Reference Layout)
      ============================================================ */
-  .main-invitation-body {
-    max-width: 680px; margin: 0 auto; padding: 100px 24px; text-align: center;
-    position: relative; z-index: 10;
+  
+  /* Section 1: Hero Names */
+  .hero-section {
+    padding: 110px 20px 70px 20px; text-align: center; position: relative; z-index: 10;
+  }
+  .hero-eyebrow {
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--ink-accent); opacity: 0.85; margin-bottom: 15px;
+  }
+  .hero-names-display {
+    font-family: 'Alex Brush', cursive;
+    font-size: clamp(56px, 13vw, 92px); color: var(--ink-dark);
+    line-height: 1.1; margin: 10px 0;
+  }
+  .hero-amp { font-family: 'Allura', cursive; color: var(--gold-accent); font-size: 0.8em; margin: 0 4px; }
+  .hero-invitation-line {
+    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
+    color: var(--ink-mid); max-width: 440px; margin: 20px auto 10px auto; line-height: 1.6;
+  }
+  .hero-date-sub {
+    font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-dark); opacity: 0.8;
   }
 
-  .paper-card-container {
-    background: var(--paper-light); border-radius: 8px;
-    border: 1px solid var(--border-line);
-    padding: 60px 40px; box-shadow: 0 25px 70px rgba(0,0,0,0.1), inset 0 0 40px rgba(140,106,67,0.06);
-    position: relative; margin-bottom: 40px; overflow: hidden;
+  /* Section 2: Arched Quranic Verse Card */
+  .arch-card-wrapper {
+    max-width: 420px; margin: 50px auto 80px auto; position: relative; z-index: 10;
+    padding: 0 20px;
+  }
+  .arch-card {
+    background: linear-gradient(180deg, #4a3726 0%, #352619 100%);
+    border-radius: 200px 200px 8px 8px;
+    border: 1px solid rgba(212,165,116,0.5);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(212,165,116,0.25);
+    padding: 60px 30px 45px 30px; text-align: center; color: #e8d4a8;
+    position: relative;
+  }
+  .arch-inner-border {
+    position: absolute; inset: 12px; border-radius: 190px 190px 4px 4px;
+    border: 1px solid rgba(212,165,116,0.3); pointer-events: none;
+  }
+  .arch-bismillah {
+    font-family: 'Amiri', serif; font-size: 22px; color: #f0d080; margin-bottom: 12px; line-height: 1.8;
+  }
+  .arch-verse-ar {
+    font-family: 'Amiri', serif; font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 10px; line-height: 1.6;
+  }
+  .arch-verse-en {
+    font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;
+    color: rgba(232,212,168,0.9); max-width: 320px; margin: 0 auto; line-height: 1.5;
+  }
+  .arch-verse-surah {
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #d4a574; margin-top: 8px; opacity: 0.85;
   }
 
-  .card-deckle-line {
-    position: absolute; inset: 16px; border: 1px solid var(--border-line);
-    border-radius: 4px; pointer-events: none;
+  /* Section 3: Countdown */
+  .countdown-section {
+    padding: 60px 20px 80px 20px; text-align: center; position: relative; z-index: 10;
+  }
+  .cd-eyebrow {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-accent); margin-bottom: 8px;
+  }
+  .cd-title-serif {
+    font-family: 'Cormorant Garamond', serif; font-size: 38px; font-style: italic; color: var(--ink-dark); margin-bottom: 4px;
+  }
+  .cd-sub-serif {
+    font-family: 'Cormorant Garamond', serif; font-size: 14px; font-style: italic; color: var(--ink-mid); opacity: 0.8;
+  }
+  
+  .cd-display-row {
+    display: flex; justify-content: center; align-items: center; gap: 15px; margin: 35px 0;
+  }
+  .cd-big-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 600; color: var(--ink-dark); line-height: 1;
+  }
+  .cd-unit-lbl {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-accent); margin-top: 4px;
+  }
+  .cd-dot-sep { font-size: 24px; color: var(--gold-accent); opacity: 0.6; margin-top: -15px; }
+
+  /* Minimalist Candles SVG Illustration */
+  .candles-svg { margin: 20px auto 0 auto; width: 140px; height: auto; display: block; opacity: 0.7; }
+
+  /* Section 4: The Venue (Full Rich Dark Cocoa Background Section) */
+  .venue-block-section {
+    background: linear-gradient(180deg, #3d2d1e 0%, #291e14 100%);
+    color: #e8d4a8; padding: 100px 20px; text-align: center; position: relative; z-index: 10;
+    box-shadow: inset 0 20px 40px rgba(0,0,0,0.5), inset 0 -20px 40px rgba(0,0,0,0.5);
+  }
+  .venue-section-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 42px; font-style: italic; color: #fff; margin-bottom: 6px;
+  }
+  .venue-section-sub {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #d4a574; opacity: 0.85; margin-bottom: 35px;
   }
 
-  /* Botanical Dried Branch Artwork SVGs */
-  .botanical-top-right {
-    position: absolute; top: -10px; right: -10px; width: 140px; height: auto;
-    pointer-events: none; opacity: 0.75; filter: drop-shadow(2px 4px 6px rgba(90,66,36,0.15));
+  /* Ornate Vintage Framed Venue Sketch Illustration Box */
+  .venue-sketch-frame {
+    max-width: 440px; margin: 0 auto 30px auto; background: var(--paper-base);
+    border-radius: 8px; padding: 16px; border: 2px solid #c49a58;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6); position: relative;
   }
-  .botanical-bottom-left {
-    position: absolute; bottom: -10px; left: -10px; width: 140px; height: auto;
-    transform: scale(-1, -1); pointer-events: none; opacity: 0.75;
-    filter: drop-shadow(2px 4px 6px rgba(90,66,36,0.15));
+  .venue-sketch-img {
+    width: 100%; height: auto; border-radius: 4px; display: block; border: 1px solid var(--border-line);
   }
 
-  /* Animated Entrance Scroll Reveals */
-  .reveal-block {
-    opacity: 0; transform: translateY(30px);
+  .venue-name-bold {
+    font-family: 'Cormorant Garamond', serif; font-size: 26px; font-style: italic; color: #fff; margin-top: 15px;
+  }
+  .venue-details-text {
+    font-size: 13px; color: rgba(232,212,168,0.85); margin-top: 6px; line-height: 1.6;
+  }
+
+  .map-pill-btn {
+    display: inline-block; margin-top: 25px; padding: 12px 32px;
+    border: 1px solid #d4a574; border-radius: 30px; color: #e8d4a8; text-decoration: none;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    transition: all 0.3s ease; background: transparent;
+  }
+  .map-pill-btn:hover { background: #d4a574; color: #291e14; transform: translateY(-2px); }
+
+  .venue-date-highlight {
+    font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic;
+    color: #e0c896; margin-top: 35px;
+  }
+
+  /* Section 5: Closing Message Card */
+  .closing-card-section {
+    padding: 80px 20px 50px 20px; text-align: center; position: relative; z-index: 10;
+  }
+  .closing-message-box {
+    max-width: 460px; margin: 0 auto;
+    background: linear-gradient(180deg, #4a3726 0%, #352619 100%);
+    border: 1px solid rgba(212,165,116,0.4); border-radius: 6px;
+    padding: 35px 28px; color: #e8d4a8;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  }
+  .closing-msg-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
+    line-height: 1.8; opacity: 0.9;
+  }
+
+  /* Section 6: Footer */
+  .footer-section {
+    background: linear-gradient(180deg, #291e14 0%, #150f0a 100%);
+    color: #e8d4a8; padding: 60px 20px 80px 20px; text-align: center; position: relative; z-index: 10;
+  }
+  .footer-title-script {
+    font-family: 'Cormorant Garamond', serif; font-size: 32px; letter-spacing: 0.15em;
+    color: #e0c896; text-transform: uppercase; font-weight: 500;
+  }
+  .footer-date-text {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(232,212,168,0.6); margin-top: 8px;
+  }
+  .interlocking-rings-svg {
+    margin: 30px auto 0 auto; width: 45px; height: auto; opacity: 0.75; display: block;
+  }
+
+  /* Scroll reveal elements */
+  .reveal-node {
+    opacity: 0; transform: translateY(24px);
     transition: opacity 0.9s var(--ease-smooth), transform 0.9s var(--ease-smooth);
   }
-  .reveal-block.in { opacity: 1; transform: translateY(0); }
+  .reveal-node.in { opacity: 1; transform: translateY(0); }
 
-  .quran-arabic-heading {
-    font-family: 'Amiri', serif; font-size: 32px; font-weight: 700; color: var(--ink-dark);
-    margin-bottom: 8px; line-height: 1.6;
-  }
-  .quran-english-text {
-    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
-    color: var(--ink-mid); margin-bottom: 4px;
-  }
-
-  .ornament-line-row {
-    display: flex; align-items: center; gap: 14px; width: 60%; margin: 25px auto;
-  }
-  .orn-line { flex: 1; height: 1px; background: var(--gold-accent); opacity: 0.5; }
-
-  .names-headline {
-    font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 10vw, 68px);
-    font-weight: 500; color: var(--ink-dark); margin: 15px 0; line-height: 1.05;
-  }
-  .names-amp { font-family: 'Alex Brush', cursive; color: var(--gold-accent); font-size: 0.9em; margin: 0 4px; }
-
-  /* Events Grid Layout */
-  .events-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0;
-  }
-  .event-card-item {
-    background: rgba(239, 229, 213, 0.55); border: 1px solid var(--border-line);
-    border-radius: 8px; padding: 30px 20px; text-align: center; position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .event-card-item:hover {
-    transform: translateY(-4px); box-shadow: 0 12px 30px rgba(74, 56, 37, 0.12);
-  }
-  .event-badge-tag {
-    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-    font-weight: 600; color: var(--ink-accent); border-bottom: 1px solid var(--gold-accent);
-    padding-bottom: 4px; display: inline-block; margin-bottom: 15px;
-  }
-  .event-big-date {
-    font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: var(--ink-dark);
-  }
-  .add-cal-btn {
-    display: inline-block; margin-top: 15px; padding: 6px 16px; border-radius: 20px;
-    border: 1px solid var(--border-line); background: var(--paper-base); color: var(--ink-dark);
-    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
-    transition: all 0.25s ease;
-  }
-  .add-cal-btn:hover { background: var(--ink-dark); color: var(--paper-light); }
-
-  /* Countdown Grid */
-  .countdown-section { margin-top: 40px; }
-  .cd-row { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
-  .cd-box {
-    width: 72px; padding: 12px 4px; background: var(--paper-base);
-    border: 1px solid var(--border-line); border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-  }
-  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--ink-dark); }
-  .cd-lbl { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-accent); }
-
-  /* Location Section */
-  .qr-code-section { margin-top: 45px; text-align: center; }
-  .qr-frame {
-    width: 110px; height: 110px; background: #fff; padding: 6px; border-radius: 8px;
-    border: 2px solid var(--ink-mid); margin: 15px auto; box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  }
-  .map-link-button {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 12px 30px; border-radius: 30px;
-    background: var(--ink-dark); color: var(--paper-light); text-decoration: none;
-    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s ease;
-  }
-  .map-link-button:hover {
-    background: var(--ink-accent); transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(74, 56, 37, 0.25);
-  }
-
-  @media (max-width: 640px) {
-    .events-grid { grid-template-columns: 1fr; }
-    .paper-card-container { padding: 40px 20px; }
-    .cd-box { width: 56px; }
-    .cd-val { font-size: 22px; }
+  @media (max-width: 600px) {
+    .hero-names-display { font-size: 48px; }
+    .cd-big-num { font-size: 36px; }
+    .venue-section-title { font-size: 32px; }
     .design-switcher-bar { top: 12px; left: 12px; }
     .top-controls { top: 12px; right: 12px; }
   }
@@ -244,7 +291,7 @@
 
 <canvas id="particles-canvas"></canvas>
 
-<!-- Floating Design Switcher -->
+<!-- Floating Switcher -->
 <div class="design-switcher-bar">
   <a class="design-link" href="design-1-booklet.html">1. 3D Booklet</a>
   <a class="design-link" href="design-2-envelope-scroll.html">2. Royal Envelope</a>
@@ -265,11 +312,11 @@
     <div class="cover-inner-border-outer"></div>
     <div class="cover-inner-border-inner"></div>
 
-    <div class="cover-eyebrow-text" data-en="THE WEDDING OF" data-ar="حفل زفاف">THE WEDDING OF</div>
+    <div class="cover-eyebrow-text" data-en="TOGETHER WITH THEIR FAMILIES" data-ar="مع عائلتيهما الكريمتين">TOGETHER WITH THEIR FAMILIES</div>
 
     <div>
-      <div class="cover-monogram-text">F<span class="cover-monogram-amp">&amp;</span>R</div>
-      <div class="serif" style="font-size: 22px; font-style: italic; opacity: 0.9;">Faeiz &amp; Rhiya</div>
+      <div class="cover-monogram-text">R<span class="cover-monogram-amp">&amp;</span>F</div>
+      <div class="serif" style="font-size: 22px; font-style: italic; opacity: 0.9;">Rhiya &amp; Faeiz</div>
     </div>
 
     <div>
@@ -279,118 +326,111 @@
   </div>
 </div>
 
-<!-- MAIN BOTANICAL INVITATION BODY -->
-<div class="main-invitation-body">
-  <div class="paper-card-container">
-    <div class="card-deckle-line"></div>
+<!-- MAIN INVITATION CONTENT (Matching Reference Image Layout) -->
 
-    <!-- Dried Botanical SVGs -->
-    <svg class="botanical-top-right" viewBox="0 0 120 220" fill="none">
-      <path d="M60 210 Q50 140 70 20 Q75 10 80 5" stroke="#a68b63" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M63 150 Q40 130 25 120" stroke="#a68b63" stroke-width="1.5"/>
-      <circle cx="23" cy="118" r="4" fill="#d4ab6e"/>
-      <circle cx="18" cy="124" r="3" fill="#efe5d5"/>
-      <path d="M66 110 Q85 95 98 85" stroke="#a68b63" stroke-width="1.5"/>
-      <circle cx="100" cy="83" r="4.5" fill="#d4ab6e"/>
-    </svg>
+<!-- Section 1: Hero Names -->
+<section class="hero-section reveal-node">
+  <div class="hero-eyebrow" data-en="TOGETHER WITH THEIR FAMILIES" data-ar="مع عائلتيهما الكريمتين">TOGETHER WITH THEIR FAMILIES</div>
+  
+  <div class="hero-names-display">
+    Rhiya <span class="hero-amp">&amp;</span> Faeiz
+  </div>
 
-    <svg class="botanical-bottom-left" viewBox="0 0 120 220" fill="none">
-      <path d="M60 210 Q50 140 70 20 Q75 10 80 5" stroke="#a68b63" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M63 150 Q40 130 25 120" stroke="#a68b63" stroke-width="1.5"/>
-      <circle cx="23" cy="118" r="4" fill="#d4ab6e"/>
-      <circle cx="18" cy="124" r="3" fill="#efe5d5"/>
-      <path d="M66 110 Q85 95 98 85" stroke="#a68b63" stroke-width="1.5"/>
-      <circle cx="100" cy="83" r="4.5" fill="#d4ab6e"/>
-    </svg>
+  <div class="hero-invitation-line" data-en="Request the honour of your presence at the celebration of their marriage." data-ar="يتشرفون بدعوتكم لحضور حفل زفافهما المبارك.">
+    Request the honour of your presence at the celebration of their marriage.
+  </div>
 
-    <!-- Quranic Verse Block -->
-    <div class="reveal-block">
-      <div class="quran-arabic-heading">وَخَلَقْنَاكُمْ أَزْوَاجًا</div>
-      <div class="quran-english-text">"And We created you in pairs."</div>
-      <div style="font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-accent); opacity: 0.8;">(SURAH AN-NABA 78:8)</div>
-    </div>
+  <div class="hero-date-sub">AUGUST 16, 2026</div>
+</section>
 
-    <div class="ornament-line-row reveal-block"><div class="orn-line"></div><div>❀</div><div class="orn-line"></div></div>
+<!-- Section 2: Arched Quranic Verse Card -->
+<div class="arch-card-wrapper reveal-node">
+  <div class="arch-card">
+    <div class="arch-inner-border"></div>
 
-    <!-- Couple Announcement -->
-    <div class="reveal-block">
-      <div style="font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-accent);" data-en="TOGETHER WITH THEIR FAMILIES" data-ar="مع عائلتيهما الكريمتين">
-        TOGETHER WITH THEIR FAMILIES
-      </div>
+    <div class="arch-bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <div class="arch-verse-ar">وَخَلَقْنَاكُمْ أَزْوَاجًا</div>
+    <div class="arch-verse-en">"And We created you in pairs."</div>
+    <div class="arch-verse-surah">(SURAH AN-NABA 78:8)</div>
 
-      <div class="names-headline">
-        Faeiz <span class="names-amp">&amp;</span> Rhiya
-      </div>
-
-      <div style="font-size: 14px; color: var(--ink-mid); max-width: 440px; margin: 0 auto; line-height: 1.7;" data-en="Request the honour of your presence at the celebration of their marriage." data-ar="يتشرفون بدعوتكم لحضور حفل زفافهما المبارك.">
-        Request the honour of your presence at the celebration of their marriage.
-      </div>
-    </div>
-
-    <!-- Events Grid -->
-    <div class="events-grid reveal-block">
-      <!-- Nikah -->
-      <div class="event-card-item">
-        <div class="event-badge-tag" data-en="NIKAH CEREMONY" data-ar="حفل النكاح">NIKAH CEREMONY</div>
-        <div class="event-big-date">FRIDAY 14</div>
-        <div style="font-size: 12px; color: var(--ink-mid); margin: 6px 0;" data-en="AUGUST 2026 · AT 4:00 PM" data-ar="أغسطس ٢٠٢٦ · الساعة ٤:٠٠ عصراً">AUGUST 2026 · AT 4:00 PM</div>
-        <div class="serif" style="font-size: 18px; font-weight: 600; margin-top: 8px;" data-en="Chemmatila Juma Masjid" data-ar="جامع شمطيلة">Chemmatila Juma Masjid</div>
-        <div style="font-size: 12px; color: var(--ink-mid);">Kunhimangalam, Kannur</div>
-        <button class="add-cal-btn" onclick="addToCal('Nikah', '2026-08-14T16:00:00')" data-en="+ Add to Calendar" data-ar="+ أضف للتقويم">+ Add to Calendar</button>
-      </div>
-
-      <!-- Reception -->
-      <div class="event-card-item">
-        <div class="event-badge-tag" data-en="RECEPTION" data-ar="حفل الاستقبال">RECEPTION</div>
-        <div class="event-big-date">SUNDAY 16</div>
-        <div style="font-size: 12px; color: var(--ink-mid); margin: 6px 0;" data-en="AUGUST 2026 · AT 12:00 PM" data-ar="أغسطس ٢٠٢٦ · الساعة ١٢:٠٠ ظهراً">AUGUST 2026 · AT 12:00 PM</div>
-        <div class="serif" style="font-size: 18px; font-weight: 600; margin-top: 8px;" data-en="Zainaba Manil" data-ar="زينبة منيل">Zainaba Manil</div>
-        <div style="font-size: 12px; color: var(--ink-mid);">Angadi, Kunhimangalam, Kannur</div>
-        <button class="add-cal-btn" onclick="addToCal('Reception', '2026-08-16T12:00:00')" data-en="+ Add to Calendar" data-ar="+ أضف للتقويم">+ Add to Calendar</button>
-      </div>
-    </div>
-
-    <!-- Countdown Section -->
-    <div class="countdown-section reveal-block">
-      <div style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-accent);" data-en="COUNTDOWN TO THE CELEBRATION" data-ar="العد التنازلي للحفل">COUNTDOWN TO THE CELEBRATION</div>
-      <div class="cd-row">
-        <div class="cd-box"><div class="cd-val" id="cd-d">00</div><div class="cd-lbl" data-en="DAYS" data-ar="أيام">DAYS</div></div>
-        <div class="cd-box"><div class="cd-val" id="cd-h">00</div><div class="cd-lbl" data-en="HOURS" data-ar="ساعات">HOURS</div></div>
-        <div class="cd-box"><div class="cd-val" id="cd-m">00</div><div class="cd-lbl" data-en="MINS" data-ar="دقائق">MINS</div></div>
-        <div class="cd-box"><div class="cd-val" id="cd-s">00</div><div class="cd-lbl" data-en="SECS" data-ar="ثواني">SECS</div></div>
-      </div>
-    </div>
-
-    <!-- Location & QR -->
-    <div class="qr-code-section reveal-block">
-      <div class="qr-frame">
-        <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
-          <rect width="100" height="100" fill="#ffffff"/>
-          <rect x="10" y="10" width="25" height="25" fill="#4a3825"/>
-          <rect x="14" y="14" width="17" height="17" fill="#ffffff"/>
-          <rect x="18" y="18" width="9" height="9" fill="#4a3825"/>
-          <rect x="65" y="10" width="25" height="25" fill="#4a3825"/>
-          <rect x="69" y="14" width="17" height="17" fill="#ffffff"/>
-          <rect x="73" y="18" width="9" height="9" fill="#4a3825"/>
-          <rect x="10" y="65" width="25" height="25" fill="#4a3825"/>
-          <rect x="14" y="69" width="17" height="17" fill="#ffffff"/>
-          <rect x="18" y="73" width="9" height="9" fill="#4a3825"/>
-          <rect x="42" y="42" width="16" height="16" fill="#4a3825"/>
-        </svg>
-      </div>
-      <a class="map-link-button" href="https://maps.google.com" target="_blank" rel="noopener">
-        <span>📍</span> <span data-en="OPEN GOOGLE MAPS" data-ar="افتح خرائط جوجل">OPEN GOOGLE MAPS</span>
-      </a>
-    </div>
-
-    <div style="margin-top: 45px;" class="script reveal-block">
-      <div style="font-size: 36px; color: var(--gold-accent);">Insha'Allah</div>
-      <div style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-mid); margin-top: 4px;" data-en="LOOKING FORWARD TO CELEBRATING WITH YOU" data-ar="نتطلع للاحتفال معكم">
-        LOOKING FORWARD TO CELEBRATING WITH YOU
-      </div>
-    </div>
+    <div style="font-family: 'Alex Brush', cursive; font-size: 28px; color: #f0d080; margin-top: 20px;">Rhiya &amp; Faeiz</div>
   </div>
 </div>
+
+<!-- Section 3: Countdown -->
+<section class="countdown-section reveal-node">
+  <div class="cd-eyebrow" data-en="OUR INVITATION" data-ar="دعوتنا">OUR INVITATION</div>
+  <div class="cd-title-serif" data-en="Countdown" data-ar="العد التنازلي">Countdown</div>
+  <div class="cd-sub-serif" data-en="To the day our hearts unite" data-ar="حتى يوم اتحاد قلبينا">To the day our hearts unite</div>
+
+  <div class="cd-display-row">
+    <div>
+      <div class="cd-big-num" id="cd-d">00</div>
+      <div class="cd-unit-lbl" data-en="DAYS" data-ar="أيام">DAYS</div>
+    </div>
+    <div class="cd-dot-sep">·</div>
+    <div>
+      <div class="cd-big-num" id="cd-h">00</div>
+      <div class="cd-unit-lbl" data-en="HOURS" data-ar="ساعات">HOURS</div>
+    </div>
+    <div class="cd-dot-sep">·</div>
+    <div>
+      <div class="cd-big-num" id="cd-m">00</div>
+      <div class="cd-unit-lbl" data-en="MINUTES" data-ar="دقائق">MINUTES</div>
+    </div>
+  </div>
+
+  <!-- Minimalist Candle Sconces SVG Illustration -->
+  <svg class="candles-svg" viewBox="0 0 200 60" fill="none">
+    <path d="M40 50 L40 25 M36 25 L44 25 M40 20 C40 20 38 10 40 5 C42 10 40 20 40 20 Z" stroke="#8c6a43" stroke-width="1.2"/>
+    <path d="M160 50 L160 25 M156 25 L164 25 M160 20 C160 20 158 10 160 5 C162 10 160 20 160 20 Z" stroke="#8c6a43" stroke-width="1.2"/>
+    <circle cx="40" cy="8" r="3" fill="#d4ab6e" opacity="0.6"/>
+    <circle cx="160" cy="8" r="3" fill="#d4ab6e" opacity="0.6"/>
+  </svg>
+</section>
+
+<!-- Section 4: The Venue (Rich Dark Cocoa Background Section) -->
+<section class="venue-block-section reveal-node">
+  <div class="venue-section-title" data-en="The Venue" data-ar="مكان الحفل">The Venue</div>
+  <div class="venue-section-sub" data-en="WHERE WE CELEBRATE" data-ar="حيث نحتفل">WHERE WE CELEBRATE</div>
+
+  <!-- Hand-drawn Architectural Venue Sketch Frame -->
+  <div class="venue-sketch-frame">
+    <img class="venue-sketch-img" src="venue-sketch.png" alt="Venue Architectural Sketch">
+  </div>
+
+  <div class="venue-name-bold" data-en="Zainaba Manil &amp; Chemmatila Juma Masjid" data-ar="زينبة منيل وجامع شمطيلة">Zainaba Manil &amp; Chemmatila Juma Masjid</div>
+  <div class="venue-details-text" data-en="Nikah: Friday, Aug 14 at 4:00 PM @ Chemmatila Juma Masjid<br>Reception: Sunday, Aug 16 at 12:00 PM @ Zainaba Manil, Angadi, Kunhimangalam, Kannur" data-ar="النكاح: الجمعة ١٤ أغسطس ٤:٠٠ عصراً @ جامع شمطيلة<br>الاستقبال: الأحد ١٦ أغسطس ١٢:٠٠ ظهراً @ زينبة منيل، كونهيمانجالام، كانور">
+    Nikah: Friday, Aug 14 at 4:00 PM @ Chemmatila Juma Masjid<br>Reception: Sunday, Aug 16 at 12:00 PM @ Zainaba Manil, Angadi, Kunhimangalam, Kannur
+  </div>
+
+  <a class="map-pill-btn" href="https://maps.google.com" target="_blank" rel="noopener" data-en="VIEW ON THE MAP" data-ar="عرض على الخريطة">VIEW ON THE MAP</a>
+
+  <div class="venue-date-highlight" data-en="Sunday, August 16, 2026" data-ar="الأحد، ١٦ أغسطس ٢٠٢٦">Sunday, August 16, 2026</div>
+</section>
+
+<!-- Section 5: Closing Message Box -->
+<section class="closing-card-section reveal-node">
+  <div class="closing-message-box">
+    <div class="closing-msg-text" data-en="Here's to love, laughter, and a lifetime of beautiful memories. We look forward to celebrating with you." data-ar="نخب الحب والضحك وعمر مليء بالذكريات الجميلة. نتطلع للاحتفال معكم.">
+      Here's to love, laughter, and a lifetime of beautiful memories. We look forward to celebrating with you.
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Footer -->
+<footer class="footer-section reveal-node">
+  <div class="footer-title-script">RHIYA &amp; FAEIZ</div>
+  <div class="footer-date-text">AUGUST 16, 2026</div>
+
+  <!-- Interlocking Wedding Rings SVG -->
+  <svg class="interlocking-rings-svg" viewBox="0 0 100 60" fill="none">
+    <circle cx="40" cy="35" r="18" stroke="#d4ab6e" stroke-width="2.5"/>
+    <circle cx="60" cy="35" r="18" stroke="#d4ab6e" stroke-width="2.5"/>
+    <!-- Diamond Gem on Ring -->
+    <path d="M40 14 L36 10 L44 10 Z" fill="#f0d080"/>
+  </svg>
+</footer>
 
 <audio id="bgMusic" loop>
   <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-wedding-114154.mp3" type="audio/mpeg">
@@ -401,11 +441,11 @@
     document.getElementById('coverModal').classList.add('opened');
   }
 
-  /* Scroll Reveal Observer */
+  /* Scroll Reveal Engine */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal-block').forEach(el => io.observe(el));
+  document.querySelectorAll('.reveal-node').forEach(el => io.observe(el));
 
   /* Countdown */
   function tickCountdown() {
@@ -414,7 +454,6 @@
     document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
     document.getElementById('cd-h').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
     document.getElementById('cd-m').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
-    document.getElementById('cd-s').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
   }
   tickCountdown(); setInterval(tickCountdown, 1000);
 
@@ -434,12 +473,6 @@
     document.querySelectorAll('[data-en]').forEach(el => {
       el.innerHTML = isAr ? el.getAttribute('data-ar') : el.getAttribute('data-en');
     });
-  }
-
-  /* Add to Calendar helper */
-  function addToCal(title, dateIso) {
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Faeiz+%26+Rhiya+Wedding+${encodeURIComponent(title)}&dates=${dateIso.replace(/[-:]/g,'')}/${dateIso.replace(/[-:]/g,'')}`;
-    window.open(url, '_blank');
   }
 </script>
 
