@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design 5: Three.js 3D Interactive Stage — Faeiz &amp; Rhiya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<!-- Three.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+  :root {
+    --paper-base:    #f5eee4;
+    --paper-light:   #fcf8f3;
+    --paper-card:    #efe5d5;
+    --paper-shadow:  #d9cbb7;
+    --ink-dark:      #4a3825;
+    --ink-mid:       #6b5237;
+    --ink-accent:    #8c6a43;
+    --gold-accent:   #b08953;
+    --gold-bright:   #d4ab6e;
+    --border-line:   #d8c7b0;
+    --bg-stage:      #14100c;
+    --ease-smooth:   cubic-bezier(.25, 1, .35, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; overflow: hidden; }
+
+  body {
+    background: var(--bg-stage);
+    color: var(--ink-dark);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  [dir="rtl"] body { font-family: 'Amiri', serif; }
+
+  .serif { font-family: 'Cormorant Garamond', serif; }
+  .script { font-family: 'Alex Brush', cursive; }
+  .script-allura { font-family: 'Allura', cursive; }
+
+  /* WebGL Three.js Canvas */
+  #webgl-canvas {
+    position: fixed; inset: 0; z-index: 1; pointer-events: auto;
+  }
+
+  /* Floating Top Navigation Switcher */
+  .design-switcher-bar {
+    position: fixed; top: 20px; left: 20px; z-index: 100;
+    display: flex; gap: 6px; background: rgba(20, 16, 12, 0.85);
+    padding: 4px; border-radius: 30px; border: 1px solid rgba(212,171,110,0.3);
+    backdrop-filter: blur(10px);
+  }
+  .design-link {
+    color: var(--paper-base); text-decoration: none; font-size: 11px;
+    padding: 6px 14px; border-radius: 20px; transition: all 0.3s ease;
+  }
+  .design-link.active, .design-link:hover {
+    background: var(--gold-accent); color: var(--paper-light);
+  }
+
+  .top-controls {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    display: flex; gap: 10px; align-items: center;
+  }
+  .control-btn {
+    background: rgba(245, 238, 228, 0.9); border: 1px solid var(--border-line);
+    color: var(--ink-dark); padding: 8px 16px; border-radius: 30px;
+    font-size: 12px; cursor: pointer; backdrop-filter: blur(8px);
+    transition: all 0.3s var(--ease-smooth); display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  }
+  .control-btn:hover { background: var(--paper-light); color: var(--ink-accent); transform: translateY(-2px); }
+
+  /* 2D HTML Overlay UI Card Floating in Three.js Scene */
+  .three-overlay-container {
+    position: fixed; inset: 0; z-index: 10; pointer-events: none;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    padding: 80px 20px 30px 20px;
+  }
+
+  .three-card-ui {
+    width: clamp(310px, 88vw, 420px);
+    background: rgba(245, 238, 228, 0.92);
+    border-radius: 8px; border: 1px solid var(--border-line);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), inset 0 0 30px rgba(140,106,67,0.1);
+    padding: 35px 25px; text-align: center; pointer-events: auto;
+    backdrop-filter: blur(12px); transform-style: preserve-3d;
+    transition: transform 0.6s var(--ease-smooth);
+  }
+
+  .deckle-line-border {
+    position: absolute; inset: 12px; border: 1px solid var(--border-line);
+    border-radius: 4px; pointer-events: none;
+  }
+
+  .three-instructions-hint {
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold-bright); opacity: 0.85; margin-top: 15px; pointer-events: none;
+    animation: pulseGentle 2.5s infinite ease-in-out;
+  }
+  @keyframes pulseGentle { 0%,100% { opacity:0.6; } 50% { opacity:1; } }
+
+  .event-pill-card {
+    background: rgba(239, 229, 213, 0.7); border: 1px solid var(--border-line);
+    border-radius: 6px; padding: 14px; margin: 10px 0; text-align: center;
+  }
+
+  .cd-row { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+  .cd-box { width: 56px; padding: 8px 2px; background: var(--paper-light); border: 1px solid var(--border-line); border-radius: 4px; }
+  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--ink-dark); }
+  .cd-lbl { font-size: 8px; letter-spacing: 0.1em; color: var(--ink-accent); }
+
+  .map-btn-gold {
+    display: inline-block; margin-top: 10px; padding: 10px 24px; border-radius: 25px;
+    background: var(--ink-dark); color: var(--paper-light); text-decoration: none;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s ease;
+  }
+  .map-btn-gold:hover { background: var(--ink-accent); transform: translateY(-2px); }
+
+  @media (max-width: 600px) {
+    .design-switcher-bar { top: 12px; left: 12px; }
+    .top-controls { top: 12px; right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WebGL Three.js Canvas -->
+<canvas id="webgl-canvas"></canvas>
+
+<!-- Top Switcher -->
+<div class="design-switcher-bar">
+  <a class="design-link" href="design-1-booklet.html">1. 3D Booklet</a>
+  <a class="design-link" href="design-2-envelope-scroll.html">2. Royal Envelope</a>
+  <a class="design-link" href="design-3-card-stack.html">3. Card Folio Deck</a>
+  <a class="design-link" href="design-4-botanical-minimal.html">4. Botanical Minimal</a>
+  <a class="design-link active" href="design-5-threejs-3d.html">5. Three.js 3D Stage</a>
+</div>
+
+<!-- Controls -->
+<div class="top-controls">
+  <button class="control-btn" onclick="toggleAudio()">🎵 <span id="audioLabel">Music</span></button>
+  <button class="control-btn" onclick="setLanguage('en')">EN</button>
+  <button class="control-btn" onclick="setLanguage('ar')">ع</button>
+</div>
+
+<!-- 2D Overlay Container -->
+<div class="three-overlay-container">
+  <div class="three-card-ui" id="threeCard">
+    <div class="deckle-line-border"></div>
+
+    <div style="font-family:'Amiri',serif; font-size:24px; font-weight:700; color:var(--ink-dark);">وَخَلَقْنَاكُمْ أَزْوَاجًا</div>
+    <div style="font-size:12px; font-style:italic; color:var(--ink-mid);">"And We created you in pairs." (Surah An-Naba 78:8)</div>
+
+    <div style="margin: 15px 0;">
+      <div style="font-size:10px; letter-spacing:0.35em; text-transform:uppercase; color:var(--ink-accent);" data-en="TOGETHER WITH THEIR FAMILIES" data-ar="مع عائلتيهما الكريمتين">TOGETHER WITH THEIR FAMILIES</div>
+      <div class="script" style="font-size: clamp(38px, 8vw, 54px); color: var(--ink-dark);">Faeiz &amp; Rhiya</div>
+    </div>
+
+    <!-- Events -->
+    <div class="event-pill-card">
+      <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; font-weight:600; color:var(--ink-accent);" data-en="NIKAH CEREMONY" data-ar="حفل النكاح">NIKAH CEREMONY</div>
+      <div class="serif" style="font-size:16px; font-weight:600; color:var(--ink-dark);">Friday, Aug 14, 2026 · 4:00 PM</div>
+      <div style="font-size:11px; color:var(--ink-mid);">Chemmatila Juma Masjid, Kunhimangalam, Kannur</div>
+    </div>
+
+    <div class="event-pill-card">
+      <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; font-weight:600; color:var(--ink-accent);" data-en="RECEPTION" data-ar="حفل الاستقبال">RECEPTION</div>
+      <div class="serif" style="font-size:16px; font-weight:600; color:var(--ink-dark);">Sunday, Aug 16, 2026 · 12:00 PM</div>
+      <div style="font-size:11px; color:var(--ink-mid);">Zainaba Manil, Angadi, Kunhimangalam, Kannur</div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="cd-row">
+      <div class="cd-box"><div class="cd-val" id="cd-d">00</div><div class="cd-lbl">DAYS</div></div>
+      <div class="cd-box"><div class="cd-val" id="cd-h">00</div><div class="cd-lbl">HOURS</div></div>
+      <div class="cd-box"><div class="cd-val" id="cd-m">00</div><div class="cd-lbl">MINS</div></div>
+      <div class="cd-box"><div class="cd-val" id="cd-s">00</div><div class="cd-lbl">SECS</div></div>
+    </div>
+
+    <a class="map-btn-gold" href="https://maps.google.com" target="_blank" rel="noopener" data-en="OPEN GOOGLE MAPS" data-ar="افتح خرائط جوجل">OPEN GOOGLE MAPS</a>
+  </div>
+
+  <div class="three-instructions-hint" data-en="✨ MOVE MOUSE / SWIPE TO ROTATE IN 3D SPACE ✨" data-ar="✨ حرّك الماوس أو المس للتدوير في الفضاء الثلاثي الأبعاد ✨">
+    ✨ MOVE MOUSE / SWIPE TO ROTATE IN 3D SPACE ✨
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-wedding-114154.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  /* THREE.JS 3D STAGE & PARTICLES ENGINE */
+  let scene, camera, renderer, particlesMesh, cardMesh;
+  let targetRotationX = 0, targetRotationY = 0;
+  let mouseX = 0, mouseY = 0;
+
+  function initThreeStage() {
+    const canvas = document.getElementById('webgl-canvas');
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x14100c, 0.0015);
+
+    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.z = 400;
+
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Ambient & Directional Lights
+    const ambientLight = new THREE.AmbientLight(0xfff5e6, 0.8);
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xd4ab6e, 2, 800);
+    pointLight.position.set(100, 200, 300);
+    scene.add(pointLight);
+
+    const goldLight = new THREE.DirectionalLight(0xb08953, 1.2);
+    goldLight.position.set(-100, -100, 200);
+    scene.add(goldLight);
+
+    // 1000+ Floating Gold Foil Sparkle Particles
+    const particlesGeo = new THREE.BufferGeometry();
+    const particleCount = 800;
+    const posArray = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      posArray[i] = (Math.random() - 0.5) * 1200;
+      posArray[i + 1] = (Math.random() - 0.5) * 1200;
+      posArray[i + 2] = (Math.random() - 0.5) * 1200;
+    }
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+    const particlesMat = new THREE.PointsMaterial({
+      size: 3.5,
+      color: 0xd4ab6e,
+      transparent: true,
+      opacity: 0.75,
+      blending: THREE.AdditiveBlending
+    });
+
+    particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particlesMesh);
+
+    // Central 3D Metallic Ring / Frame Slab
+    const ringGeo = new THREE.TorusGeometry(140, 3, 16, 100);
+    const ringMat = new THREE.MeshStandardMaterial({
+      color: 0xb08953, metalness: 0.8, roughness: 0.2
+    });
+    cardMesh = new THREE.Mesh(ringGeo, ringMat);
+    scene.add(cardMesh);
+
+    window.addEventListener('resize', onWindowResize);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('touchmove', onTouchMove);
+  }
+
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  function onMouseMove(e) {
+    mouseX = (e.clientX - window.innerWidth / 2) * 0.001;
+    mouseY = (e.clientY - window.innerHeight / 2) * 0.001;
+    
+    // Tilt 2D Card UI
+    const card = document.getElementById('threeCard');
+    if (card) {
+      card.style.transform = `rotateX(${-mouseY * 20}deg) rotateY(${mouseX * 20}deg)`;
+    }
+  }
+
+  function onTouchMove(e) {
+    if (e.touches.length > 0) {
+      mouseX = (e.touches[0].clientX - window.innerWidth / 2) * 0.0015;
+      mouseY = (e.touches[0].clientY - window.innerHeight / 2) * 0.0015;
+    }
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate 3D WebGL Mesh & Particles
+    if (particlesMesh) particlesMesh.rotation.y += 0.0008;
+    if (cardMesh) {
+      cardMesh.rotation.y += 0.004;
+      cardMesh.rotation.x = mouseY * 2;
+      cardMesh.rotation.z = mouseX * 2;
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  initThreeStage();
+  animate();
+
+  /* Countdown */
+  function tickCountdown() {
+    const target = new Date("2026-08-16T12:00:00").getTime();
+    const diff = Math.max(0, target - Date.now());
+    document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    document.getElementById('cd-h').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  }
+  tickCountdown(); setInterval(tickCountdown, 1000);
+
+  /* Audio */
+  let isAudioPlaying = false;
+  function toggleAudio() {
+    const audio = document.getElementById('bgMusic');
+    const label = document.getElementById('audioLabel');
+    if (isAudioPlaying) { audio.pause(); label.textContent = "Music"; isAudioPlaying = false; }
+    else { audio.play().catch(() => {}); label.textContent = "Playing"; isAudioPlaying = true; }
+  }
+
+  /* Language Switcher */
+  function setLanguage(lang) {
+    const isAr = lang === 'ar';
+    document.getElementById('htmlRoot').setAttribute('dir', isAr ? 'rtl' : 'ltr');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isAr ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+  }
+</script>
+
+</body>
+</html>
