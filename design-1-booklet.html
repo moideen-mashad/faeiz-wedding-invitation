@@ -165,7 +165,7 @@
   /* BALANCED CENTERING UI/UX — NO AWKWARD EMPTY SPACE GAPS */
   .cover-content, .page-inner-content {
     height: 100%; width: 100%;
-    padding: 24px 20px;
+    padding: 26px 22px;
     display: flex; flex-direction: column;
     justify-content: center; align-items: center;
     gap: 16px;
@@ -249,7 +249,7 @@
   .event-card-box {
     background: rgba(239, 229, 213, 0.75);
     border: 1px solid var(--border-line);
-    border-radius: 10px; padding: 18px 16px; margin: 4px 0;
+    border-radius: 10px; padding: 20px 18px; margin: 4px 0;
     position: relative; width: 100%;
     box-shadow: 0 4px 15px rgba(140, 106, 67, 0.08);
   }
@@ -313,8 +313,10 @@
   }
 
   .maps-btn-pill {
-    display: inline-block;
-    padding: 8px 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 22px;
     border: 1px solid var(--ink-dark);
     border-radius: 20px;
     color: var(--ink-dark);
@@ -368,7 +370,7 @@
   @media (max-width: 480px) {
     .carousel-slide { padding: 45px 8px 65px 8px; }
     .book-page-2d { max-height: 580px; }
-    .cover-content, .page-inner-content { padding: 18px 12px; gap: 12px; }
+    .cover-content, .page-inner-content { padding: 20px 14px; gap: 12px; }
     
     .quran-header-arabic { font-size: 23px; }
     .couple-title-main { font-size: 42px; }
@@ -377,7 +379,7 @@
 
     .venue-image-frame img { max-height: 175px; }
     
-    .event-card-box { padding: 14px 10px; margin: 4px 0; }
+    .event-card-box { padding: 16px 12px; margin: 4px 0; }
     .datetime-col .date-num { font-size: 30px; }
     .location-venue-name { font-size: 17px; }
 
@@ -521,10 +523,13 @@
           </div>
           
           <div>
-            <a class="maps-btn-pill" href="https://maps.google.com" target="_blank" rel="noopener" data-en="VIEW ON GOOGLE MAPS" data-ar="عرض على خرائط جوجل">VIEW ON GOOGLE MAPS</a>
+            <a class="maps-btn-pill" href="https://maps.google.com" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span data-en="VIEW ON GOOGLE MAPS" data-ar="عرض على خرائط جوجل">VIEW ON GOOGLE MAPS</span>
+            </a>
           </div>
 
-          <div class="event-card-box" style="width:100%; padding:12px 14px; margin:0;">
+          <div class="event-card-box" style="width:100%; padding:14px 12px; margin:0;">
             <div class="location-address" style="font-size:12.5px; margin-top:0;" data-en="Chemmatila &amp; Zainaba Manil<br>Kunhimangalam, Kannur" data-ar="شمطيلة وزينبة منيل<br>كونهيمانجالام، كانور">
               Chemmatila &amp; Zainaba Manil<br>Kunhimangalam, Kannur
             </div>
