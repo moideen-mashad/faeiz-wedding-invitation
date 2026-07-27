@@ -194,27 +194,33 @@
     display: block; margin: -4px 0; font-weight: 400;
   }
 
+  /* Bouncing Scroll Cue on Cover */
   .cover-tap-prompt {
     margin-top: 6px;
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    cursor: pointer; animation: pulseGentle 2.5s infinite ease-in-out;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    cursor: pointer;
   }
   .tap-seal-btn {
-    width: 50px; height: 50px; border-radius: 50%;
+    width: 48px; height: 48px; border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #d4ab6e, #8c6a43 70%, #4a3825);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 5px 15px rgba(74, 56, 37, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
     border: 1px solid var(--gold-bright);
     color: var(--paper-light); font-family: 'Cormorant Garamond', serif;
-    font-size: 17px; font-weight: 600;
+    font-size: 16px; font-weight: 600;
   }
   .tap-text {
     font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-accent);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .bounce-arrow {
+    font-size: 12px; color: var(--gold-accent);
+    animation: bounceDown 1.8s infinite ease-in-out;
   }
 
-  @keyframes pulseGentle {
-    0%, 100% { transform: scale(1); opacity: 0.9; }
-    50% { transform: scale(1.05); opacity: 1; }
+  @keyframes bounceDown {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(5px); opacity: 1; }
   }
 
   .section-heading-serif {
@@ -304,32 +310,38 @@
     color: var(--paper-light);
   }
 
-  /* Sleek Floating Bottom Mobile Swipe Pagination Bar (No Numbers) */
-  .booklet-nav-bar {
-    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-    z-index: 90; display: flex; align-items: center; gap: 14px;
-    background: rgba(28, 23, 19, 0.92); padding: 8px 22px; border-radius: 40px;
-    border: 1px solid rgba(212, 171, 110, 0.4); backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.65);
+  /* ============================================================
+     PRACTISED MOBILE UI/UX BOTTOM NAVIGATION TAB BAR
+     ============================================================ */
+  .bottom-scroll-navbar {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 90; display: flex; align-items: center; gap: 4px;
+    background: rgba(28, 23, 19, 0.93); padding: 5px 8px; border-radius: 40px;
+    border: 1px solid rgba(212, 171, 110, 0.4); backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    max-width: 94vw;
   }
 
-  .nav-dots { display: flex; gap: 8px; align-items: center; }
-  .nav-dot {
-    width: 8px; height: 8px; border-radius: 50%; background: rgba(245, 238, 228, 0.35);
-    cursor: pointer; transition: all 0.35s var(--ease-smooth);
-  }
-  .nav-dot.active {
-    width: 22px; height: 8px; border-radius: 10px;
-    background: var(--gold-bright);
-    box-shadow: 0 0 10px rgba(212, 171, 110, 0.6);
+  .nav-tab-btn {
+    background: transparent; border: none;
+    color: var(--paper-base);
+    padding: 6px 14px; border-radius: 30px;
+    font-size: 11px; font-weight: 400; letter-spacing: 0.04em;
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    transition: all 0.3s var(--ease-smooth);
+    opacity: 0.75;
   }
 
-  .nav-arrow-btn {
-    background: transparent; border: none; color: var(--paper-light);
-    font-size: 15px; cursor: pointer; padding: 2px 5px; border-radius: 50%;
-    transition: all 0.25s ease;
+  .nav-tab-btn.active, .nav-tab-btn:hover {
+    background: var(--gold-accent);
+    color: var(--paper-light);
+    opacity: 1;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(176, 137, 83, 0.4);
   }
-  .nav-arrow-btn:hover { color: var(--gold-bright); transform: scale(1.2); }
+
+  .tab-icon { font-size: 11px; }
+  .tab-label { font-size: 11px; }
 
   /* Mobile Responsiveness & Touch Adjustments */
   @media (max-width: 480px) {
@@ -354,7 +366,9 @@
     .cd-val { font-size: 16px; }
 
     .botanical-stem { width: 85px; opacity: 0.6; }
-    .booklet-nav-bar { bottom: 12px; padding: 7px 18px; gap: 12px; }
+    .bottom-scroll-navbar { bottom: 12px; padding: 4px 6px; gap: 2px; }
+    .nav-tab-btn { padding: 5px 10px; font-size: 10px; }
+    .tab-label { font-size: 10px; }
   }
 </style>
 </head>
@@ -404,7 +418,7 @@
         </div>
         <div class="cover-tap-prompt" onclick="scrollToSlide(2)">
           <div class="tap-seal-btn">F&amp;R</div>
-          <div class="tap-text" data-en="SWIPE TO VIEW ↓" data-ar="اسحب للعرض ↓">SWIPE TO VIEW ↓</div>
+          <div class="tap-text" data-en="SCROLL DOWN" data-ar="اسحب للأسفل"><span>SCROLL DOWN</span> <span class="bounce-arrow">↓</span></div>
         </div>
       </div>
     </div>
@@ -427,7 +441,7 @@
           <div class="event-datetime-grid">
             <div class="datetime-col"><div class="day-name" data-en="FRIDAY" data-ar="الجمعة">FRIDAY</div><div class="date-num">14</div></div>
             <div class="datetime-divider"></div>
-            <div class="datetime-col"><div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div><div class="time-text" data-en="AT 4:00 PM" data-ar="الساعة ٤:٠0 عصراً">AT 4:00 PM</div></div>
+            <div class="datetime-col"><div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div><div class="time-text" data-en="AT 4:00 PM" data-ar="الساعة ٤:٠٠ عصراً">AT 4:00 PM</div></div>
           </div>
           <div class="location-venue-name" data-en="Chemmatila Juma Masjid" data-ar="جامع شمطيلة">Chemmatila Juma Masjid</div>
           <div class="location-address" data-en="Kunhimangalam, Kannur" data-ar="كونهيمانجالام، كانور">Kunhimangalam, Kannur</div>
@@ -510,16 +524,24 @@
 
 </div>
 
-<!-- FLOATING MOBILE SWIPE PAGINATION BAR (NO NUMBERS) -->
-<div class="booklet-nav-bar" id="navBar">
-  <button class="nav-arrow-btn" onclick="scrollToPrevSlide()">❮</button>
-  <div class="nav-dots">
-    <span class="nav-dot active" id="dot1" onclick="scrollToSlide(1)"></span>
-    <span class="nav-dot" id="dot2" onclick="scrollToSlide(2)"></span>
-    <span class="nav-dot" id="dot3" onclick="scrollToSlide(3)"></span>
-    <span class="nav-dot" id="dot4" onclick="scrollToSlide(4)"></span>
-  </div>
-  <button class="nav-arrow-btn" onclick="scrollToNextSlide()">❯</button>
+<!-- PRACTISED MOBILE UI/UX BOTTOM NAVIGATION TAB BAR -->
+<div class="bottom-scroll-navbar" id="navBar">
+  <button class="nav-tab-btn active" id="tab1" onclick="scrollToSlide(1)">
+    <span class="tab-icon">🌸</span>
+    <span class="tab-label" data-en="Cover" data-ar="الغلاف">Cover</span>
+  </button>
+  <button class="nav-tab-btn" id="tab2" onclick="scrollToSlide(2)">
+    <span class="tab-icon">💍</span>
+    <span class="tab-label" data-en="Nikah" data-ar="النكاح">Nikah</span>
+  </button>
+  <button class="nav-tab-btn" id="tab3" onclick="scrollToSlide(3)">
+    <span class="tab-icon">🥂</span>
+    <span class="tab-label" data-en="Reception" data-ar="الاستقبال">Reception</span>
+  </button>
+  <button class="nav-tab-btn" id="tab4" onclick="scrollToSlide(4)">
+    <span class="tab-icon">📍</span>
+    <span class="tab-label" data-en="Venue" data-ar="الموقع">Venue</span>
+  </button>
 </div>
 
 <audio id="bgMusic" loop preload="auto">
@@ -567,14 +589,8 @@
       slide.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
-  function scrollToNextSlide() {
-    if (activeSlideNum < 4) scrollToSlide(activeSlideNum + 1);
-  }
-  function scrollToPrevSlide() {
-    if (activeSlideNum > 1) scrollToSlide(activeSlideNum - 1);
-  }
 
-  // Detect active slide on scroll snap
+  // Detect active slide on scroll snap and update bottom navigation tabs
   viewport.addEventListener('scroll', () => {
     const scrollPos = viewport.scrollTop;
     const slideHeight = viewport.clientHeight;
@@ -582,15 +598,19 @@
     if (index >= 1 && index <= 4 && index !== activeSlideNum) {
       activeSlideNum = index;
       for (let i = 1; i <= 4; i++) {
-        const dot = document.getElementById('dot' + i);
-        if (dot) dot.classList.toggle('active', i === index);
+        const tab = document.getElementById('tab' + i);
+        if (tab) tab.classList.toggle('active', i === index);
       }
     }
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') scrollToNextSlide();
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') scrollToPrevSlide();
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      if (activeSlideNum < 4) scrollToSlide(activeSlideNum + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      if (activeSlideNum > 1) scrollToSlide(activeSlideNum - 1);
+    }
   });
 
   function toggleAudio() {
