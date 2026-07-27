@@ -341,7 +341,7 @@
     padding: 6px 14px; border-radius: 30px;
     font-size: 11px; font-weight: 400; letter-spacing: 0.04em;
     cursor: pointer; display: flex; align-items: center; gap: 5px;
-    transition: all 0.3s var(--ease-smooth);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
     opacity: 0.8;
   }
 
@@ -564,7 +564,7 @@
 <script>
   const WEDDING_DATE_ISO = "2026-08-16T12:00:00";
   let activeSlideNum = 1;
-  let isAudioPlaying = false;
+  let isProgrammaticScrolling = false;
   const viewport = document.getElementById('carouselViewport');
 
   (function initStageParticles() {
@@ -612,18 +612,33 @@
     const slide = document.getElementById('slide' + num);
     if (slide) {
       updateActiveTab(num);
+      isProgrammaticScrolling = true;
       slide.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        isProgrammaticScrolling = false;
+        updateActiveTab(num);
+      }, 600);
     }
   }
 
-  // Detect active slide on scroll snap and strictly highlight ONLY the single active tab
-  viewport.addEventListener('scroll', () => {
-    const scrollPos = viewport.scrollTop;
-    const slideHeight = viewport.clientHeight;
-    const index = Math.round((scrollPos + slideHeight / 2) / slideHeight) + 1;
-    if (index >= 1 && index <= 4 && index !== activeSlideNum) {
-      updateActiveTab(index);
-    }
+  // Detect active slide on scroll snap using IntersectionObserver (bulletproof & smooth on mobile)
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !isProgrammaticScrolling) {
+        const slideId = entry.target.id;
+        const num = parseInt(slideId.replace('slide', ''));
+        if (num && num !== activeSlideNum) {
+          updateActiveTab(num);
+        }
+      }
+    });
+  }, {
+    root: viewport,
+    threshold: 0.6
+  });
+
+  document.querySelectorAll('.carousel-slide').forEach(slide => {
+    slideObserver.observe(slide);
   });
 
   document.addEventListener('keydown', (e) => {
