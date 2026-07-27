@@ -22,10 +22,12 @@
     --dark-cocoa:    #3d2d1e;
     --dark-cocoa-2:  #291e14;
     --ease-smooth:   cubic-bezier(.25, 1, .35, 1);
+    --ease-back:     cubic-bezier(.34, 1.56, .64, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { min-height: 100%; width: 100%; scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; }
+  html, body { min-height: 100%; width: 100%; }
 
   body {
     background: var(--paper-base);
@@ -42,7 +44,7 @@
   .script-allura { font-family: 'Allura', cursive; }
   .stamp { font-family: 'Marcellus', serif; }
 
-  /* Ambient Canvas */
+  /* Ambient Particle Canvas */
   #particles-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
 
   /* Top Navigation Switcher */
@@ -80,10 +82,10 @@
     position: fixed; inset: 0; z-index: 60;
     background: radial-gradient(ellipse at center, #3d2d1e 0%, #291e14 70%, #150f0a 100%);
     display: flex; align-items: center; justify-content: center;
-    transition: opacity 1s var(--ease-smooth), transform 1s var(--ease-smooth);
+    transition: opacity 1.2s var(--ease-smooth), transform 1.2s var(--ease-smooth);
   }
   #coverModal.opened {
-    opacity: 0; pointer-events: none; transform: scale(1.05);
+    opacity: 0; pointer-events: none; transform: scale(1.06);
   }
 
   .cover-card-inner {
@@ -112,7 +114,7 @@
   .open-invitation-btn:hover { color: #352619; background: #e8d4a8; transform: translateY(-2px); }
 
   /* ============================================================
-     MAIN OPENED INVITATION PAGE (Matching Reference Layout)
+     MAIN OPENED INVITATION PAGE & ANIMATION STYLES
      ============================================================ */
   
   /* Section 1: Hero Names */
@@ -123,12 +125,24 @@
     font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
     color: var(--ink-accent); opacity: 0.85; margin-bottom: 15px;
   }
+
+  /* Shimmer sweep effect on names */
   .hero-names-display {
     font-family: 'Alex Brush', cursive;
     font-size: clamp(56px, 13vw, 92px); color: var(--ink-dark);
     line-height: 1.1; margin: 10px 0;
+    background: linear-gradient(135deg, #4a3825 0%, #8c6a43 40%, #d4ab6e 50%, #8c6a43 60%, #4a3825 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: goldSweep 6s ease-in-out infinite;
   }
-  .hero-amp { font-family: 'Allura', cursive; color: var(--gold-accent); font-size: 0.8em; margin: 0 4px; }
+  @keyframes goldSweep {
+    0% { background-position: 200% center; }
+    50% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+
+  .hero-amp { font-family: 'Allura', cursive; color: var(--gold-accent); font-size: 0.8em; margin: 0 4px; -webkit-text-fill-color: initial; }
   .hero-invitation-line {
     font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
     color: var(--ink-mid); max-width: 440px; margin: 20px auto 10px auto; line-height: 1.6;
@@ -137,18 +151,23 @@
     font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-dark); opacity: 0.8;
   }
 
-  /* Section 2: Arched Quranic Verse Card */
+  /* Section 2: Arched Quranic Verse Card (3D Tilt & Shadow) */
   .arch-card-wrapper {
     max-width: 420px; margin: 50px auto 80px auto; position: relative; z-index: 10;
-    padding: 0 20px;
+    padding: 0 20px; perspective: 1000px;
   }
   .arch-card {
     background: linear-gradient(180deg, #4a3726 0%, #352619 100%);
     border-radius: 200px 200px 8px 8px;
     border: 1px solid rgba(212,165,116,0.5);
-    box-shadow: 0 25px 60px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(212,165,116,0.25);
+    box-shadow: 0 30px 70px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(212,165,116,0.25);
     padding: 60px 30px 45px 30px; text-align: center; color: #e8d4a8;
-    position: relative;
+    position: relative; transition: transform 0.6s var(--ease-smooth), box-shadow 0.6s ease;
+    transform-style: preserve-3d;
+  }
+  .arch-card:hover {
+    transform: rotateX(4deg) rotateY(-4deg) translateY(-8px);
+    box-shadow: 0 40px 85px rgba(0,0,0,0.45);
   }
   .arch-inner-border {
     position: absolute; inset: 12px; border-radius: 190px 190px 4px 4px;
@@ -187,14 +206,23 @@
   }
   .cd-big-num {
     font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 600; color: var(--ink-dark); line-height: 1;
+    transition: transform 0.4s var(--ease-back);
   }
   .cd-unit-lbl {
     font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-accent); margin-top: 4px;
   }
   .cd-dot-sep { font-size: 24px; color: var(--gold-accent); opacity: 0.6; margin-top: -15px; }
 
-  /* Minimalist Candles SVG Illustration */
-  .candles-svg { margin: 20px auto 0 auto; width: 140px; height: auto; display: block; opacity: 0.7; }
+  /* Candle Flame Flickering Glow Animation */
+  .candle-flame {
+    animation: flameFlicker 2.5s ease-in-out infinite alternate; transform-origin: center bottom;
+  }
+  @keyframes flameFlicker {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+    50% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+    100% { transform: scale(0.92) rotate(-2deg); opacity: 0.8; }
+  }
+  .candles-svg { margin: 20px auto 0 auto; width: 140px; height: auto; display: block; }
 
   /* Section 4: The Venue (Full Rich Dark Cocoa Background Section) */
   .venue-block-section {
@@ -213,8 +241,10 @@
   .venue-sketch-frame {
     max-width: 440px; margin: 0 auto 30px auto; background: var(--paper-base);
     border-radius: 8px; padding: 16px; border: 2px solid #c49a58;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6); position: relative;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6); position: relative;
+    transition: transform 0.6s var(--ease-smooth);
   }
+  .venue-sketch-frame:hover { transform: scale(1.02) translateY(-6px); }
   .venue-sketch-img {
     width: 100%; height: auto; border-radius: 4px; display: block; border: 1px solid var(--border-line);
   }
@@ -232,7 +262,7 @@
     font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
     transition: all 0.3s ease; background: transparent;
   }
-  .map-pill-btn:hover { background: #d4a574; color: #291e14; transform: translateY(-2px); }
+  .map-pill-btn:hover { background: #d4a574; color: #291e14; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212,165,116,0.3); }
 
   .venue-date-highlight {
     font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic;
@@ -249,13 +279,15 @@
     border: 1px solid rgba(212,165,116,0.4); border-radius: 6px;
     padding: 35px 28px; color: #e8d4a8;
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    transition: transform 0.4s ease;
   }
+  .closing-message-box:hover { transform: translateY(-4px); }
   .closing-msg-text {
     font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
     line-height: 1.8; opacity: 0.9;
   }
 
-  /* Section 6: Footer */
+  /* Section 6: Footer & Interlocking Rings Animation */
   .footer-section {
     background: linear-gradient(180deg, #291e14 0%, #150f0a 100%);
     color: #e8d4a8; padding: 60px 20px 80px 20px; text-align: center; position: relative; z-index: 10;
@@ -268,13 +300,15 @@
     font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(232,212,168,0.6); margin-top: 8px;
   }
   .interlocking-rings-svg {
-    margin: 30px auto 0 auto; width: 45px; height: auto; opacity: 0.75; display: block;
+    margin: 30px auto 0 auto; width: 45px; height: auto; opacity: 0.85; display: block;
+    transition: transform 0.8s var(--ease-back);
   }
+  .interlocking-rings-svg:hover { transform: scale(1.18) rotate(6deg); }
 
-  /* Scroll reveal elements */
+  /* Multi-level Scroll Reveal Classes */
   .reveal-node {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.9s var(--ease-smooth), transform 0.9s var(--ease-smooth);
+    opacity: 0; transform: translateY(36px);
+    transition: opacity 1s var(--ease-smooth), transform 1s var(--ease-smooth);
   }
   .reveal-node.in { opacity: 1; transform: translateY(0); }
 
@@ -326,7 +360,7 @@
   </div>
 </div>
 
-<!-- MAIN INVITATION CONTENT (Matching Reference Image Layout) -->
+<!-- MAIN INVITATION CONTENT -->
 
 <!-- Section 1: Hero Names -->
 <section class="hero-section reveal-node">
@@ -345,7 +379,7 @@
 
 <!-- Section 2: Arched Quranic Verse Card -->
 <div class="arch-card-wrapper reveal-node">
-  <div class="arch-card">
+  <div class="arch-card" id="archCard">
     <div class="arch-inner-border"></div>
 
     <div class="arch-bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
@@ -380,12 +414,12 @@
     </div>
   </div>
 
-  <!-- Minimalist Candle Sconces SVG Illustration -->
+  <!-- Minimalist Candle Sconces SVG Illustration with Flame Glow -->
   <svg class="candles-svg" viewBox="0 0 200 60" fill="none">
     <path d="M40 50 L40 25 M36 25 L44 25 M40 20 C40 20 38 10 40 5 C42 10 40 20 40 20 Z" stroke="#8c6a43" stroke-width="1.2"/>
     <path d="M160 50 L160 25 M156 25 L164 25 M160 20 C160 20 158 10 160 5 C162 10 160 20 160 20 Z" stroke="#8c6a43" stroke-width="1.2"/>
-    <circle cx="40" cy="8" r="3" fill="#d4ab6e" opacity="0.6"/>
-    <circle cx="160" cy="8" r="3" fill="#d4ab6e" opacity="0.6"/>
+    <circle class="candle-flame" cx="40" cy="8" r="3.5" fill="#f0d080"/>
+    <circle class="candle-flame" cx="160" cy="8" r="3.5" fill="#f0d080"/>
   </svg>
 </section>
 
@@ -427,7 +461,6 @@
   <svg class="interlocking-rings-svg" viewBox="0 0 100 60" fill="none">
     <circle cx="40" cy="35" r="18" stroke="#d4ab6e" stroke-width="2.5"/>
     <circle cx="60" cy="35" r="18" stroke="#d4ab6e" stroke-width="2.5"/>
-    <!-- Diamond Gem on Ring -->
     <path d="M40 14 L36 10 L44 10 Z" fill="#f0d080"/>
   </svg>
 </footer>
@@ -446,6 +479,45 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal-node').forEach(el => io.observe(el));
+
+  /* Parallax Motion Engine on Scroll */
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const arch = document.getElementById('archCard');
+    if (arch) {
+      arch.style.transform = `translateY(${scrolled * 0.04}px)`;
+    }
+  });
+
+  /* Particle Animation Engine */
+  (function initParticles() {
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const COLORS = ['rgba(212,171,110,', 'rgba(166,139,99,', 'rgba(239,229,213,'];
+    function createParticle() {
+      return {
+        x: Math.random() * W, y: Math.random() * H + H,
+        r: Math.random() * 2 + 0.5, speed: Math.random() * 0.4 + 0.15,
+        drift: (Math.random() - 0.5) * 0.3, alpha: Math.random() * 0.5 + 0.2,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)]
+      };
+    }
+    for (let i = 0; i < 50; i++) { const p = createParticle(); p.y = Math.random() * H; particles.push(p); }
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.y -= p.speed; p.x += p.drift;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ')'; ctx.fill();
+        if (p.y < -10) Object.assign(p, createParticle());
+      });
+      requestAnimationFrame(render);
+    }
+    render();
+  })();
 
   /* Countdown */
   function tickCountdown() {
