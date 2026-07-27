@@ -279,17 +279,54 @@
     font-size: 14px; color: var(--ink-mid); margin-top: 4px; line-height: 1.45; font-weight: 400;
   }
 
-  /* COUNTDOWN ROW ENLARGED */
+  /* HIGH-IMPACT HIGHLIGHTED COUNTDOWN SECTION */
+  .countdown-wrapper {
+    width: 100%;
+    background: rgba(252, 248, 243, 0.65);
+    border: 1px solid var(--gold-accent);
+    border-radius: 14px;
+    padding: 14px 10px;
+    margin-top: 4px;
+    box-shadow: 0 6px 20px rgba(176, 137, 83, 0.12);
+  }
+
+  .countdown-title-badge {
+    display: inline-block;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-dark); font-weight: 600;
+    padding: 4px 14px; border-radius: 20px;
+    background: linear-gradient(135deg, rgba(212,171,110,0.3), rgba(176,137,83,0.15));
+    border: 1px solid rgba(176, 137, 83, 0.4);
+    margin-bottom: 10px;
+  }
+
   .countdown-row {
-    display: flex; justify-content: center; gap: 10px; margin: 10px 0;
+    display: flex; justify-content: center; gap: 10px; margin: 2px 0;
   }
+  
   .cd-box {
-    width: 62px; padding: 10px 4px; background: var(--paper-light);
-    border: 1px solid var(--border-line); border-radius: 8px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    width: 65px; padding: 10px 4px;
+    background: linear-gradient(145deg, #ffffff 0%, #fcf8f3 100%);
+    border: 1.5px solid var(--gold-accent);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(176, 137, 83, 0.2), inset 0 1px 3px rgba(255,255,255,0.9);
+    transition: transform 0.3s ease;
   }
-  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 27px; font-weight: 700; color: var(--ink-dark); }
-  .cd-lbl { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-accent); font-weight: 600; }
+  .cd-box:hover {
+    transform: translateY(-2px);
+  }
+  
+  .cd-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 29px; font-weight: 700;
+    color: var(--ink-dark);
+    line-height: 1;
+  }
+  
+  .cd-lbl {
+    font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-accent); font-weight: 600; margin-top: 3px;
+  }
 
   /* Venue Image Frame - TIGHT FIT TO IMAGE ASPECT RATIO */
   .venue-image-frame {
@@ -428,9 +465,12 @@
     .location-venue-name { font-size: 20px; }
     .location-address { font-size: 13.5px; }
 
+    .countdown-wrapper { padding: 12px 8px; }
+    .countdown-title-badge { font-size: 10px; padding: 3px 10px; }
     .countdown-row { gap: 6px; }
-    .cd-box { width: 52px; padding: 8px 2px; }
-    .cd-val { font-size: 22px; }
+    .cd-box { width: 54px; padding: 8px 2px; }
+    .cd-val { font-size: 24px; }
+    .cd-lbl { font-size: 8.5px; }
 
     .botanical-stem { width: 95px; opacity: 0.65; }
     .bottom-scroll-navbar { bottom: 12px; padding: 4px 6px; gap: 2px; }
@@ -517,7 +557,7 @@
     </div>
   </div>
 
-  <!-- SLIDE 3: WEDDING RECEPTION -->
+  <!-- SLIDE 3: WEDDING RECEPTION (HIGHLIGHTED COUNTDOWN BOXES) -->
   <div class="carousel-slide" id="slide3">
     <div class="book-page-2d" id="page3">
       <div class="paper-texture"></div>
@@ -537,8 +577,10 @@
           <div class="location-venue-name" data-en="Zainaba Manil" data-ar="زينبة منيل">Zainaba Manil</div>
           <div class="location-address" data-en="Angadi, Kunhimangalam, Kannur" data-ar="عنقادي، كونهيمانجالام، كانور">Angadi, Kunhimangalam, Kannur</div>
         </div>
-        <div>
-          <div style="font-size: 11.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-accent); margin-bottom: 6px; font-weight: 500;" data-en="COUNTDOWN TO CELEBRATION" data-ar="العد التنازلي للحفل">COUNTDOWN TO CELEBRATION</div>
+        
+        <!-- HIGHLIGHTED GOLD COUNTDOWN CONTAINER -->
+        <div class="countdown-wrapper">
+          <div class="countdown-title-badge" data-en="⏳ COUNTDOWN TO CELEBRATION" data-ar="⏳ العد التنازلي للحفل">⏳ COUNTDOWN TO CELEBRATION</div>
           <div class="countdown-row">
             <div class="cd-box"><div class="cd-val" id="cd-days">00</div><div class="cd-lbl" data-en="DAYS" data-ar="أيام">DAYS</div></div>
             <div class="cd-box"><div class="cd-val" id="cd-hours">00</div><div class="cd-lbl" data-en="HOURS" data-ar="ساعات">HOURS</div></div>
