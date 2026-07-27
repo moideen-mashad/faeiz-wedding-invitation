@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design 4: Botanical Minimalist — Faeiz &amp; Rhiya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper-base:    #f5eee4;
+    --paper-light:   #fcf8f3;
+    --paper-card:    #efe5d5;
+    --paper-shadow:  #d9cbb7;
+    --ink-dark:      #4a3825;
+    --ink-mid:       #6b5237;
+    --ink-accent:    #8c6a43;
+    --gold-accent:   #b08953;
+    --gold-bright:   #d4ab6e;
+    --border-line:   #d8c7b0;
+    --bg-stage:      #1a1511;
+    --cover-bg:      #3d2d1e;
+    --ease-smooth:   cubic-bezier(.25, 1, .35, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; width: 100%; scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper-base);
+    color: var(--ink-dark);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  [dir="rtl"] body { font-family: 'Amiri', serif; }
+
+  .serif { font-family: 'Cormorant Garamond', serif; }
+  .script { font-family: 'Alex Brush', cursive; }
+  .script-allura { font-family: 'Allura', cursive; }
+
+  /* Floating Particle Sparks */
+  #particles-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+
+  /* Floating Top Navigation Switcher Bar */
+  .design-switcher-bar {
+    position: fixed; top: 20px; left: 20px; z-index: 100;
+    display: flex; gap: 6px; background: rgba(28, 23, 19, 0.85);
+    padding: 4px; border-radius: 30px; border: 1px solid rgba(212,171,110,0.3);
+    backdrop-filter: blur(10px);
+  }
+  .design-link {
+    color: var(--paper-base); text-decoration: none; font-size: 11px;
+    padding: 6px 14px; border-radius: 20px; transition: all 0.3s ease;
+  }
+  .design-link.active, .design-link:hover {
+    background: var(--gold-accent); color: var(--paper-light);
+  }
+
+  .top-controls {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    display: flex; gap: 10px; align-items: center;
+  }
+  .control-btn {
+    background: rgba(245, 238, 228, 0.9); border: 1px solid var(--border-line);
+    color: var(--ink-dark); padding: 8px 16px; border-radius: 30px;
+    font-size: 12px; cursor: pointer; backdrop-filter: blur(8px);
+    transition: all 0.3s var(--ease-smooth); display: flex; align-items: center; gap: 6px;
+  }
+  .control-btn:hover { background: var(--paper-light); color: var(--ink-accent); }
+
+  /* ============================================================
+     INTRO MODAL COVER SCENE (Reference Layout)
+     ============================================================ */
+  #coverModal {
+    position: fixed; inset: 0; z-index: 60;
+    background: radial-gradient(ellipse at center, #3d2d1e 0%, #291e14 70%, #150f0a 100%);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 1s var(--ease-smooth), transform 1s var(--ease-smooth);
+  }
+  #coverModal.opened {
+    opacity: 0; pointer-events: none; transform: scale(1.05);
+  }
+
+  .cover-card-inner {
+    width: clamp(290px, 86vw, 420px);
+    height: clamp(480px, 75vh, 560px);
+    background: linear-gradient(180deg, #4a3726 0%, #352619 100%);
+    border-radius: 4px; border: 1px solid rgba(212,165,116,0.5);
+    box-shadow: 0 40px 90px -20px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(212,165,116,0.3);
+    position: relative; padding: 45px 30px;
+    display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    text-align: center; color: #e8d4a8;
+  }
+
+  .cover-inner-border-outer { position: absolute; inset: 16px; border: 1px solid rgba(212,165,116,0.35); pointer-events: none; }
+  .cover-inner-border-inner { position: absolute; inset: 22px; border: 1px solid rgba(212,165,116,0.2); pointer-events: none; }
+
+  .cover-eyebrow-text { font-size: 10px; letter-spacing: 0.55em; text-transform: uppercase; color: rgba(232,212,168,0.75); }
+
+  .cover-monogram-text {
+    font-family: 'Allura', cursive; font-size: clamp(54px, 14vw, 84px);
+    color: #e0c896; line-height: 1; margin: 10px 0;
+  }
+  .cover-monogram-amp { color: #d4a574; font-size: 0.75em; margin: 0 4px; }
+
+  .open-invitation-btn {
+    position: relative; overflow: hidden; padding: 12px 32px;
+    border: 1px solid rgba(212,165,116,0.7); color: #e8d4a8; background: transparent;
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.5s ease; margin-top: 15px;
+  }
+  .open-invitation-btn:hover { color: #352619; background: #e8d4a8; transform: translateY(-2px); }
+
+  /* ============================================================
+     MAIN SCROLLABLE INVITATION LAYOUT
+     ============================================================ */
+  .main-invitation-body {
+    max-width: 680px; margin: 0 auto; padding: 100px 24px; text-align: center;
+  }
+
+  .paper-card-container {
+    background: var(--paper-light); border-radius: 8px;
+    border: 1px solid var(--border-line);
+    padding: 60px 35px; box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    position: relative; margin-bottom: 40px;
+  }
+
+  .card-deckle-line {
+    position: absolute; inset: 16px; border: 1px solid var(--border-line);
+    border-radius: 4px; pointer-events: none;
+  }
+
+  .quran-arabic-heading {
+    font-family: 'Amiri', serif; font-size: 30px; font-weight: 700; color: var(--ink-dark);
+    margin-bottom: 8px; line-height: 1.6;
+  }
+  .quran-english-text {
+    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
+    color: var(--ink-mid); margin-bottom: 4px;
+  }
+
+  .ornament-line-row {
+    display: flex; align-items: center; gap: 12px; width: 60%; margin: 25px auto;
+  }
+  .orn-line { flex: 1; height: 1px; background: var(--gold-accent); opacity: 0.5; }
+
+  .names-headline {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 9vw, 64px);
+    font-weight: 500; color: var(--ink-dark); margin: 15px 0; line-height: 1.05;
+  }
+  .names-amp { font-family: 'Alex Brush', cursive; color: var(--gold-accent); font-size: 0.9em; margin: 0 4px; }
+
+  .events-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0;
+  }
+  .event-card-item {
+    background: rgba(239, 229, 213, 0.5); border: 1px solid var(--border-line);
+    border-radius: 8px; padding: 28px 18px; text-align: center;
+  }
+  .event-badge-tag {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink-accent); border-bottom: 1px solid var(--gold-accent);
+    padding-bottom: 4px; display: inline-block; margin-bottom: 15px;
+  }
+  .event-big-date {
+    font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 600; color: var(--ink-dark);
+  }
+
+  .countdown-section { margin-top: 35px; }
+  .cd-row { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+  .cd-box {
+    width: 68px; padding: 12px 4px; background: var(--paper-base);
+    border: 1px solid var(--border-line); border-radius: 6px;
+  }
+  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--ink-dark); }
+  .cd-lbl { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-accent); }
+
+  .qr-code-section { margin-top: 40px; text-align: center; }
+  .qr-frame {
+    width: 100px; height: 100px; background: #fff; padding: 6px; border-radius: 8px;
+    border: 2px solid var(--ink-mid); margin: 15px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .map-link-button {
+    display: inline-block; padding: 12px 28px; border-radius: 30px;
+    background: var(--ink-dark); color: var(--paper-light); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; transition: all 0.3s ease;
+  }
+  .map-link-button:hover { background: var(--ink-accent); transform: translateY(-2px); }
+
+  @media (max-width: 640px) {
+    .events-grid { grid-template-columns: 1fr; }
+    .paper-card-container { padding: 40px 20px; }
+    .design-switcher-bar { top: 12px; left: 12px; }
+    .top-controls { top: 12px; right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- Floating Switcher -->
+<div class="design-switcher-bar">
+  <a class="design-link" href="design-1-booklet.html">1. 3D Booklet</a>
+  <a class="design-link" href="design-2-envelope-scroll.html">2. Royal Envelope</a>
+  <a class="design-link" href="design-3-card-stack.html">3. Card Folio Deck</a>
+  <a class="design-link active" href="design-4-botanical-minimal.html">4. Botanical Minimal</a>
+</div>
+
+<!-- Top Controls -->
+<div class="top-controls">
+  <button class="control-btn" onclick="toggleAudio()">🎵 <span id="audioLabel">Music</span></button>
+  <button class="control-btn" onclick="setLanguage('en')">EN</button>
+  <button class="control-btn" onclick="setLanguage('ar')">ع</button>
+</div>
+
+<!-- COVER INTRO MODAL -->
+<div id="coverModal">
+  <div class="cover-card-inner">
+    <div class="cover-inner-border-outer"></div>
+    <div class="cover-inner-border-inner"></div>
+
+    <div class="cover-eyebrow-text" data-en="THE WEDDING OF" data-ar="حفل زفاف">THE WEDDING OF</div>
+
+    <div>
+      <div class="cover-monogram-text">F<span class="cover-monogram-amp">&amp;</span>R</div>
+      <div class="serif" style="font-size: 20px; font-style: italic; opacity: 0.9;">Faeiz &amp; Rhiya</div>
+    </div>
+
+    <div>
+      <div class="cover-eyebrow-text" style="margin-bottom: 12px;">16 · 08 · 2026</div>
+      <button class="open-invitation-btn" onclick="closeCover()" data-en="OPEN INVITATION" data-ar="افتح الدعوة">OPEN INVITATION</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-invitation-body">
+  <div class="paper-card-container">
+    <div class="card-deckle-line"></div>
+
+    <div class="quran-arabic-heading">وَخَلَقْنَاكُمْ أَزْوَاجًا</div>
+    <div class="quran-english-text">"And We created you in pairs." (Surah An-Naba 78:8)</div>
+
+    <div class="ornament-line-row"><div class="orn-line"></div><div>❀</div><div class="orn-line"></div></div>
+
+    <div style="font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-accent);" data-en="TOGETHER WITH THEIR FAMILIES" data-ar="مع عائلتيهما الكريمتين">
+      TOGETHER WITH THEIR FAMILIES
+    </div>
+
+    <div class="names-headline">
+      Faeiz <span class="names-amp">&amp;</span> Rhiya
+    </div>
+
+    <div style="font-size: 13px; color: var(--ink-mid); max-width: 420px; margin: 0 auto; line-height: 1.6;" data-en="Request the honour of your presence at the celebration of their marriage." data-ar="يتشرفون بدعوتكم لحضور حفل زفافهما المبارك.">
+      Request the honour of your presence at the celebration of their marriage.
+    </div>
+
+    <div class="events-grid">
+      <!-- Nikah -->
+      <div class="event-card-item">
+        <div class="event-badge-tag" data-en="NIKAH CEREMONY" data-ar="حفل النكاح">NIKAH CEREMONY</div>
+        <div class="event-big-date">FRIDAY 14</div>
+        <div style="font-size: 12px; color: var(--ink-mid); margin: 6px 0;" data-en="AUGUST 2026 · AT 4:00 PM" data-ar="أغسطس ٢٠٢٦ · الساعة ٤:٠٠ عصراً">AUGUST 2026 · AT 4:00 PM</div>
+        <div class="serif" style="font-size: 18px; font-weight: 600; margin-top: 8px;">Chemmatila Juma Masjid</div>
+        <div style="font-size: 12px; color: var(--ink-mid);">Kunhimangalam, Kannur</div>
+      </div>
+
+      <!-- Reception -->
+      <div class="event-card-item">
+        <div class="event-badge-tag" data-en="RECEPTION" data-ar="حفل الاستقبال">RECEPTION</div>
+        <div class="event-big-date">SUNDAY 16</div>
+        <div style="font-size: 12px; color: var(--ink-mid); margin: 6px 0;" data-en="AUGUST 2026 · AT 12:00 PM" data-ar="أغسطس ٢٠٢٦ · الساعة ١٢:٠٠ ظهراً">AUGUST 2026 · AT 12:00 PM</div>
+        <div class="serif" style="font-size: 18px; font-weight: 600; margin-top: 8px;">Zainaba Manil</div>
+        <div style="font-size: 12px; color: var(--ink-mid);">Angadi, Kunhimangalam, Kannur</div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-section">
+      <div style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-accent);" data-en="COUNTDOWN TO THE DAY" data-ar="العد التنازلي للحفل">COUNTDOWN TO THE DAY</div>
+      <div class="cd-row">
+        <div class="cd-box"><div class="cd-val" id="cd-d">00</div><div class="cd-lbl">DAYS</div></div>
+        <div class="cd-box"><div class="cd-val" id="cd-h">00</div><div class="cd-lbl">HOURS</div></div>
+        <div class="cd-box"><div class="cd-val" id="cd-m">00</div><div class="cd-lbl">MINS</div></div>
+        <div class="cd-box"><div class="cd-val" id="cd-s">00</div><div class="cd-lbl">SECS</div></div>
+      </div>
+    </div>
+
+    <!-- Location & QR -->
+    <div class="qr-code-section">
+      <div class="qr-frame">
+        <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+          <rect width="100" height="100" fill="#ffffff"/>
+          <rect x="10" y="10" width="25" height="25" fill="#4a3825"/>
+          <rect x="14" y="14" width="17" height="17" fill="#ffffff"/>
+          <rect x="18" y="18" width="9" height="9" fill="#4a3825"/>
+          <rect x="65" y="10" width="25" height="25" fill="#4a3825"/>
+          <rect x="69" y="14" width="17" height="17" fill="#ffffff"/>
+          <rect x="73" y="18" width="9" height="9" fill="#4a3825"/>
+          <rect x="10" y="65" width="25" height="25" fill="#4a3825"/>
+          <rect x="14" y="69" width="17" height="17" fill="#ffffff"/>
+          <rect x="18" y="73" width="9" height="9" fill="#4a3825"/>
+          <rect x="42" y="42" width="16" height="16" fill="#4a3825"/>
+        </svg>
+      </div>
+      <a class="map-link-button" href="https://maps.google.com" target="_blank" rel="noopener" data-en="OPEN GOOGLE MAPS" data-ar="افتح خرائط جوجل">OPEN GOOGLE MAPS</a>
+    </div>
+
+    <div style="margin-top: 40px;" class="script">
+      <div style="font-size: 32px; color: var(--gold-accent);">Insha'Allah</div>
+      <div style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-mid); margin-top: 4px;" data-en="LOOKING FORWARD TO CELEBRATING WITH YOU" data-ar="نتطلع للاحتفال معكم">
+        LOOKING FORWARD TO CELEBRATING WITH YOU
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-wedding-114154.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  function closeCover() {
+    document.getElementById('coverModal').classList.add('opened');
+  }
+
+  function tickCountdown() {
+    const target = new Date("2026-08-16T12:00:00").getTime();
+    const diff = Math.max(0, target - Date.now());
+    document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    document.getElementById('cd-h').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  }
+  tickCountdown(); setInterval(tickCountdown, 1000);
+
+  let isAudioPlaying = false;
+  function toggleAudio() {
+    const audio = document.getElementById('bgMusic');
+    const label = document.getElementById('audioLabel');
+    if (isAudioPlaying) { audio.pause(); label.textContent = "Music"; isAudioPlaying = false; }
+    else { audio.play().catch(() => {}); label.textContent = "Playing"; isAudioPlaying = true; }
+  }
+
+  function setLanguage(lang) {
+    const isAr = lang === 'ar';
+    document.getElementById('htmlRoot').setAttribute('dir', isAr ? 'rtl' : 'ltr');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isAr ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+  }
+</script>
+
+</body>
+</html>
