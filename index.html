@@ -57,35 +57,43 @@
     background: radial-gradient(circle at 50% 40%, rgba(212,171,110,0.15) 0%, rgba(140,106,67,0.05) 50%, rgba(28,23,19,0.95) 100%);
   }
 
-  /* ---------- Top Floating Controls ---------- */
+  /* ---------- Top Floating Controls (Segmented Pill Switch) ---------- */
   .top-controls {
     position: fixed; top: 16px; right: 16px; z-index: 100;
     display: flex; gap: 8px; align-items: center;
   }
   [dir="rtl"] .top-controls { right: auto; left: 16px; }
 
-  .control-btn {
-    background: rgba(245, 238, 228, 0.92);
-    border: 1px solid var(--border-line);
-    color: var(--ink-dark);
-    padding: 7px 14px; border-radius: 30px;
-    font-size: 11px; letter-spacing: 0.1em;
-    cursor: pointer; backdrop-filter: blur(8px);
-    transition: all 0.3s var(--ease-smooth);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    display: flex; align-items: center; gap: 5px;
-  }
-  .control-btn:hover {
-    background: var(--paper-light);
-    transform: translateY(-2px);
-    border-color: var(--gold-accent);
-    color: var(--ink-accent);
-  }
-  .control-btn.active {
-    background: var(--ink-dark); color: var(--paper-light);
+  .lang-switch-pill {
+    display: inline-flex;
+    background: rgba(28, 23, 19, 0.92);
+    padding: 3px;
+    border-radius: 30px;
+    border: 1px solid rgba(212, 171, 110, 0.4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.35);
   }
 
-  .control-icon-svg { stroke: currentColor; opacity: 0.85; }
+  .lang-option {
+    background: transparent;
+    border: none;
+    color: var(--paper-base);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-smooth);
+    opacity: 0.75;
+  }
+
+  .lang-option.active {
+    background: var(--gold-accent);
+    color: var(--paper-light);
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(176, 137, 83, 0.5);
+  }
 
   /* ============================================================
      FULLSCREEN CAROUSEL SNAP VIEWPORT
@@ -379,14 +387,12 @@
 <canvas id="stage-particles"></canvas>
 <div class="stage-light"></div>
 
-<!-- Top Controls Bar -->
+<!-- Top Floating Controls (Segmented Pill Switch) -->
 <div class="top-controls">
-  <button class="control-btn" id="audioToggle" onclick="toggleAudio()">
-    <svg class="control-icon-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-    <span id="audioLabel">Music</span>
-  </button>
-  <button class="control-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
-  <button class="control-btn" id="langBtnAr" onclick="setLanguage('ar')">ع</button>
+  <div class="lang-switch-pill">
+    <button class="lang-option active" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+    <button class="lang-option" id="langBtnAr" onclick="setLanguage('ar')">ع</button>
+  </div>
 </div>
 
 <!-- FULLSCREEN CAROUSEL SNAP VIEWPORT -->
@@ -547,9 +553,11 @@
   </button>
 </div>
 
+<!-- COMMENTED MUSIC AUDIO CODE
 <audio id="bgMusic" loop preload="auto">
   <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-wedding-114154.mp3" type="audio/mpeg">
 </audio>
+-->
 
 <script>
   const WEDDING_DATE_ISO = "2026-08-16T12:00:00";
@@ -616,12 +624,14 @@
     }
   });
 
+  /* COMMENTED MUSIC TOGGLE FUNCTION
   function toggleAudio() {
     const audio = document.getElementById('bgMusic');
     const label = document.getElementById('audioLabel');
     if (isAudioPlaying) { audio.pause(); label.textContent = "Music"; isAudioPlaying = false; }
     else { audio.play().catch(() => {}); label.textContent = "Playing"; isAudioPlaying = true; }
   }
+  */
 
   function setLanguage(lang) {
     const html = document.getElementById('htmlRoot');
