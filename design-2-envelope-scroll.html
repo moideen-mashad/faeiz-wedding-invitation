@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design 2: Royal Wax Envelope &amp; Scroll — Faeiz &amp; Rhiya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper-base:    #f5eee4;
+    --paper-light:   #fcf8f3;
+    --paper-card:    #efe5d5;
+    --paper-shadow:  #d9cbb7;
+    --ink-dark:      #4a3825;
+    --ink-mid:       #6b5237;
+    --ink-accent:    #8c6a43;
+    --gold-accent:   #b08953;
+    --gold-bright:   #d4ab6e;
+    --twine:         #a68b63;
+    --border-line:   #d8c7b0;
+    --bg-stage:      #1a1511;
+    --ease-smooth:   cubic-bezier(.25, 1, .35, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; width: 100%; }
+
+  body {
+    background: var(--bg-stage);
+    color: var(--ink-dark);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  [dir="rtl"] body { font-family: 'Amiri', serif; }
+
+  .serif { font-family: 'Cormorant Garamond', serif; }
+  .script { font-family: 'Alex Brush', cursive; }
+  .stamp { font-family: 'Marcellus', serif; }
+
+  /* Background Canvas */
+  #particles-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+
+  /* Top Nav Switcher & Controls */
+  .design-switcher-bar {
+    position: fixed; top: 20px; left: 20px; z-index: 100;
+    display: flex; gap: 6px; background: rgba(28, 23, 19, 0.85);
+    padding: 4px; border-radius: 30px; border: 1px solid rgba(212,171,110,0.3);
+    backdrop-filter: blur(10px);
+  }
+  .design-link {
+    color: var(--paper-base); text-decoration: none; font-size: 11px;
+    padding: 6px 14px; border-radius: 20px; transition: all 0.3s ease;
+  }
+  .design-link.active, .design-link:hover {
+    background: var(--gold-accent); color: var(--paper-light);
+  }
+
+  .top-controls {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    display: flex; gap: 10px; align-items: center;
+  }
+  .control-btn {
+    background: rgba(245, 238, 228, 0.9); border: 1px solid var(--border-line);
+    color: var(--ink-dark); padding: 8px 16px; border-radius: 30px;
+    font-size: 12px; cursor: pointer; backdrop-filter: blur(8px);
+    transition: all 0.3s var(--ease-smooth); display: flex; align-items: center; gap: 6px;
+  }
+  .control-btn:hover { background: var(--paper-light); color: var(--ink-accent); }
+
+  /* ============================================================
+     ROYAL ENVELOPE STAGE (Opening State)
+     ============================================================ */
+  .envelope-stage {
+    position: fixed; inset: 0; z-index: 40;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    perspective: 1200px; transition: opacity 1s var(--ease-smooth), transform 1s var(--ease-smooth);
+  }
+  .envelope-stage.opened {
+    opacity: 0; pointer-events: none; transform: translateY(-100px) scale(0.9);
+  }
+
+  .envelope-3d {
+    position: relative; width: 340px; height: 230px;
+    background: var(--paper-card); border-radius: 8px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.65), inset 0 0 20px rgba(140,106,67,0.2);
+    border: 1px solid var(--border-line);
+    cursor: pointer; transform-style: preserve-3d;
+    transition: transform 0.6s var(--ease-smooth);
+  }
+  .envelope-3d:hover { transform: translateY(-6px) rotateX(4deg); }
+
+  /* Envelope Flap */
+  .envelope-flap {
+    position: absolute; top: 0; left: 0; right: 0; height: 130px;
+    background: linear-gradient(180deg, #e4d7c3 0%, #efe5d5 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center; transition: transform 0.8s var(--ease-smooth);
+    z-index: 10; border-top: 1px solid var(--border-line);
+  }
+  .envelope-3d.opening .envelope-flap {
+    transform: rotateX(180deg);
+  }
+
+  /* Wax Seal on Flap */
+  .envelope-wax-seal {
+    position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
+    width: 68px; height: 68px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #d4ab6e, #8c6a43 70%, #4a3825);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+    border: 2px solid var(--gold-bright); color: var(--paper-light);
+    font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600;
+    z-index: 15; cursor: pointer; transition: transform 0.4s ease;
+  }
+  .envelope-wax-seal:hover { transform: translateX(-50%) scale(1.08); }
+
+  .envelope-text-preview {
+    position: absolute; bottom: 25px; left: 0; right: 0; text-align: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500;
+    color: var(--ink-dark); letter-spacing: 0.1em;
+  }
+  .tap-to-open-hint {
+    margin-top: 30px; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold-bright); opacity: 0.8; animation: pulseGentle 2s infinite;
+  }
+  @keyframes pulseGentle { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+  /* ============================================================
+     PARCHMENT SCROLL CONTENT (Scroll Layout)
+     ============================================================ */
+  .scroll-container {
+    max-width: 640px; margin: 0 auto; padding: 60px 20px 100px 20px;
+    position: relative; z-index: 10; opacity: 0; transform: translateY(40px);
+    transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+  }
+  .scroll-container.visible { opacity: 1; transform: translateY(0); }
+
+  .parchment-sheet {
+    background: var(--paper-base); border-radius: 8px;
+    padding: 60px 40px; position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 40px rgba(140,106,67,0.15);
+    border: 1px solid var(--border-line); text-align: center;
+  }
+
+  .deckle-border {
+    position: absolute; inset: 16px; border: 1px solid var(--border-line);
+    border-radius: 4px; pointer-events: none;
+  }
+
+  .quran-verse-block { margin-bottom: 30px; }
+  .quran-ar { font-family: 'Amiri', serif; font-size: 28px; color: var(--ink-dark); font-weight: 700; }
+  .quran-en { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; color: var(--ink-mid); margin-top: 6px; }
+
+  .ornament-divider { display: flex; align-items: center; gap: 12px; width: 60%; margin: 20px auto; }
+  .ornament-line { flex: 1; height: 1px; background: var(--gold-accent); opacity: 0.6; }
+
+  .couple-names-display {
+    font-family: 'Cormorant Garamond', serif; font-size: 54px; font-weight: 500;
+    color: var(--ink-dark); margin: 15px 0; line-height: 1.1;
+  }
+
+  .events-grid-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 40px 0;
+  }
+  .event-card {
+    background: rgba(239, 229, 213, 0.6); border: 1px solid var(--border-line);
+    border-radius: 8px; padding: 24px 16px; text-align: center;
+  }
+  .event-badge {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink-accent); border-bottom: 1px solid var(--gold-accent);
+    padding-bottom: 4px; display: inline-block; margin-bottom: 12px;
+  }
+  .event-date-large {
+    font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600; color: var(--ink-dark);
+  }
+  .event-time { font-size: 12px; color: var(--ink-mid); margin: 6px 0; font-weight: 500; }
+  .venue-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--ink-dark); margin-top: 10px; }
+
+  .cd-row { display: flex; justify-content: center; gap: 10px; margin-top: 25px; }
+  .cd-item {
+    width: 70px; padding: 12px 6px; background: var(--paper-light);
+    border: 1px solid var(--border-line); border-radius: 6px;
+  }
+  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--ink-dark); }
+  .cd-lbl { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-accent); }
+
+  .qr-section { margin-top: 40px; text-align: center; }
+  .qr-box {
+    width: 110px; height: 110px; background: #fff; padding: 6px; border-radius: 8px;
+    border: 2px solid var(--ink-mid); margin: 15px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .map-btn {
+    display: inline-block; padding: 12px 28px; border-radius: 30px;
+    background: var(--ink-dark); color: var(--paper-light); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    transition: all 0.3s ease; margin-top: 10px;
+  }
+  .map-btn:hover { background: var(--ink-accent); transform: translateY(-2px); }
+
+  @media (max-width: 600px) {
+    .events-grid-row { grid-template-columns: 1fr; }
+    .parchment-sheet { padding: 40px 20px; }
+    .couple-names-display { font-size: 40px; }
+    .envelope-3d { width: 300px; height: 210px; }
+    .design-switcher-bar { top: 12px; left: 12px; }
+    .top-controls { top: 12px; right: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<div class="design-switcher-bar">
+  <a class="design-link" href="design-1-booklet.html">1. 3D Booklet</a>
+  <a class="design-link active" href="design-2-envelope-scroll.html">2. Royal Envelope</a>
+  <a class="design-link" href="design-3-card-stack.html">3. Card Folio Deck</a>
+</div>
+
+<div class="top-controls">
+  <button class="control-btn" onclick="toggleAudio()">🎵 <span id="audioLabel">Music</span></button>
+  <button class="control-btn" onclick="setLanguage('en')">EN</button>
+  <button class="control-btn" onclick="setLanguage('ar')">ع</button>
+</div>
+
+<!-- ROYAL ENVELOPE COVER -->
+<div class="envelope-stage" id="envelopeStage">
+  <div class="envelope-3d" id="envelope3d" onclick="openEnvelope()">
+    <div class="envelope-flap"></div>
+    <div class="envelope-wax-seal">F&amp;R</div>
+    <div class="envelope-text-preview">Faeiz &amp; Rhiya</div>
+  </div>
+  <div class="tap-to-open-hint" data-en="CLICK WAX SEAL TO UNWRAP INVITATION" data-ar="انقر على الختم لفتح الدعوة">
+    CLICK WAX SEAL TO UNWRAP INVITATION
+  </div>
+</div>
+
+<!-- UNFOLDED PARCHMENT INVITATION -->
+<div class="scroll-container" id="scrollContainer">
+  <div class="parchment-sheet">
+    <div class="deckle-border"></div>
+
+    <div class="quran-verse-block">
+      <div class="quran-ar">وَخَلَقْنَاكُمْ أَزْوَاجًا</div>
+      <div class="quran-en">"And We created you in pairs." (Surah An-Naba 78:8)</div>
+    </div>
+
+    <div class="ornament-divider"><div class="ornament-line"></div><div>❀</div><div class="ornament-line"></div></div>
+
+    <div style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-accent);" data-en="TOGETHER WITH THEIR FAMILIES" data-ar="مع عائلتيهما الكريمتين">
+      TOGETHER WITH THEIR FAMILIES
+    </div>
+
+    <div class="couple-names-display">Faeiz &amp; Rhiya</div>
+
+    <div style="font-size: 13px; color: var(--ink-mid); max-width: 420px; margin: 0 auto;" data-en="Request the honour of your presence at the celebration of their marriage." data-ar="يتشرفون بدعوتكم لحضور حفل زفافهما المبارك.">
+      Request the honour of your presence at the celebration of their marriage.
+    </div>
+
+    <div class="events-grid-row">
+      <!-- Event 1: Nikah -->
+      <div class="event-card">
+        <div class="event-badge" data-en="NIKAH CEREMONY" data-ar="حفل النكاح">NIKAH CEREMONY</div>
+        <div class="event-date-large">FRIDAY 14</div>
+        <div class="event-time" data-en="AUGUST 2026 · AT 4:00 PM" data-ar="أغسطس ٢٠٢٦ · الساعة ٤:٠٠ عصراً">AUGUST 2026 · AT 4:00 PM</div>
+        <div class="venue-title" data-en="Chemmatila Juma Masjid" data-ar="جامع شمطيلة">Chemmatila Juma Masjid</div>
+        <div style="font-size: 12px; color: var(--ink-mid); margin-top: 4px;">Kunhimangalam, Kannur</div>
+      </div>
+
+      <!-- Event 2: Reception -->
+      <div class="event-card">
+        <div class="event-badge" data-en="RECEPTION" data-ar="حفل الاستقبال">RECEPTION</div>
+        <div class="event-date-large">SUNDAY 16</div>
+        <div class="event-time" data-en="AUGUST 2026 · AT 12:00 PM" data-ar="أغسطس ٢٠٢٦ · الساعة ١٢:٠٠ ظهراً">AUGUST 2026 · AT 12:00 PM</div>
+        <div class="venue-title" data-en="Zainaba Manil" data-ar="زينبة منيل">Zainaba Manil</div>
+        <div style="font-size: 12px; color: var(--ink-mid); margin-top: 4px;">Angadi, Kunhimangalam, Kannur</div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div>
+      <div style="font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-accent);" data-en="COUNTDOWN TO THE CELEBRATION" data-ar="العد التنازلي للحفل">
+        COUNTDOWN TO THE CELEBRATION
+      </div>
+      <div class="cd-row">
+        <div class="cd-item"><div class="cd-val" id="cd-d">00</div><div class="cd-lbl" data-en="DAYS" data-ar="أيام">DAYS</div></div>
+        <div class="cd-item"><div class="cd-val" id="cd-h">00</div><div class="cd-lbl" data-en="HOURS" data-ar="ساعات">HOURS</div></div>
+        <div class="cd-item"><div class="cd-val" id="cd-m">00</div><div class="cd-lbl" data-en="MINS" data-ar="دقائق">MINS</div></div>
+        <div class="cd-item"><div class="cd-val" id="cd-s">00</div><div class="cd-lbl" data-en="SECS" data-ar="ثواني">SECS</div></div>
+      </div>
+    </div>
+
+    <!-- Location & QR -->
+    <div class="qr-section">
+      <div class="qr-box">
+        <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+          <rect width="100" height="100" fill="#ffffff"/>
+          <rect x="10" y="10" width="25" height="25" fill="#4a3825"/>
+          <rect x="14" y="14" width="17" height="17" fill="#ffffff"/>
+          <rect x="18" y="18" width="9" height="9" fill="#4a3825"/>
+          <rect x="65" y="10" width="25" height="25" fill="#4a3825"/>
+          <rect x="69" y="14" width="17" height="17" fill="#ffffff"/>
+          <rect x="73" y="18" width="9" height="9" fill="#4a3825"/>
+          <rect x="10" y="65" width="25" height="25" fill="#4a3825"/>
+          <rect x="14" y="69" width="17" height="17" fill="#ffffff"/>
+          <rect x="18" y="73" width="9" height="9" fill="#4a3825"/>
+          <rect x="42" y="42" width="16" height="16" fill="#4a3825"/>
+        </svg>
+      </div>
+      <a class="map-btn" href="https://maps.google.com" target="_blank" rel="noopener" data-en="GET MAP DIRECTIONS" data-ar="الحصول على الاتجاهات">GET MAP DIRECTIONS</a>
+    </div>
+
+    <div style="margin-top: 40px;" class="script">
+      <div style="font-size: 34px; color: var(--gold-accent);">Insha'Allah</div>
+      <div style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-mid); margin-top: 4px;" data-en="LOOKING FORWARD TO CELEBRATING WITH YOU" data-ar="نتطلع للاحتفال معكم">
+        LOOKING FORWARD TO CELEBRATING WITH YOU
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-wedding-114154.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  function openEnvelope() {
+    document.getElementById('envelope3d').classList.add('opening');
+    setTimeout(() => {
+      document.getElementById('envelopeStage').classList.add('opened');
+      document.getElementById('scrollContainer').classList.add('visible');
+    }, 700);
+  }
+
+  function tickCountdown() {
+    const target = new Date("2026-08-16T12:00:00").getTime();
+    const diff = Math.max(0, target - Date.now());
+    document.getElementById('cd-d').textContent = String(Math.floor(diff / 86400000)).padStart(2, '0');
+    document.getElementById('cd-h').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(Math.floor((diff % 60000) / 1000)).padStart(2, '0');
+  }
+  tickCountdown(); setInterval(tickCountdown, 1000);
+
+  let isAudioPlaying = false;
+  function toggleAudio() {
+    const audio = document.getElementById('bgMusic');
+    const label = document.getElementById('audioLabel');
+    if (isAudioPlaying) { audio.pause(); label.textContent = "Music"; isAudioPlaying = false; }
+    else { audio.play().catch(() => {}); label.textContent = "Playing"; isAudioPlaying = true; }
+  }
+
+  function setLanguage(lang) {
+    const isAr = lang === 'ar';
+    document.getElementById('htmlRoot').setAttribute('dir', isAr ? 'rtl' : 'ltr');
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isAr ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+  }
+</script>
+</body>
+</html>

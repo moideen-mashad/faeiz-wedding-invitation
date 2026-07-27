@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faeiz &amp; Rhiya — Wedding Invitation &amp; Booklet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BRAND COLOR PALETTE — Extracted from Client Image
+     ============================================================ */
+  :root {
+    --paper-base:    #f5eee4;
+    --paper-light:   #fcf8f3;
+    --paper-card:    #efe5d5;
+    --paper-shadow:  #d9cbb7;
+    --ink-dark:      #4a3825;
+    --ink-mid:       #6b5237;
+    --ink-accent:    #8c6a43;
+    --gold-accent:   #b08953;
+    --gold-bright:   #d4ab6e;
+    --twine:         #a68b63;
+    --twine-dark:    #7a6341;
+    --border-line:   #d8c7b0;
+    --bg-stage:      #1c1713;
+    --ease-smooth:   cubic-bezier(.25, 1, .35, 1);
+    --ease-bounce:   cubic-bezier(.34, 1.56, .64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; overflow-x: hidden; }
+  
+  body {
+    background: var(--bg-stage);
+    color: var(--ink-dark);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  [dir="rtl"] body { font-family: 'Amiri', serif; }
+
+  .serif { font-family: 'Cormorant Garamond', serif; }
+  .script { font-family: 'Alex Brush', cursive; }
+  .stamp { font-family: 'Marcellus', serif; }
+
+  /* ---------- Ambient Stage Particle Canvas ---------- */
+  #stage-particles {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  }
+
+  /* ---------- Ambient Warm Lighting ---------- */
+  .stage-light {
+    position: fixed; inset: 0; pointer-events: none; z-index: 2;
+    background: radial-gradient(circle at 50% 40%, rgba(212,171,110,0.15) 0%, rgba(140,106,67,0.05) 50%, rgba(28,23,19,0.95) 100%);
+  }
+
+  /* ---------- Top Floating Controls ---------- */
+  .top-controls {
+    position: fixed; top: 20px; right: 20px; z-index: 100;
+    display: flex; gap: 10px; align-items: center;
+  }
+  [dir="rtl"] .top-controls { right: auto; left: 20px; }
+
+  .control-btn {
+    background: rgba(245, 238, 228, 0.9);
+    border: 1px solid var(--border-line);
+    color: var(--ink-dark);
+    padding: 8px 16px; border-radius: 30px;
+    font-size: 12px; letter-spacing: 0.1em;
+    cursor: pointer; backdrop-filter: blur(8px);
+    transition: all 0.3s var(--ease-smooth);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .control-btn:hover {
+    background: var(--paper-light);
+    transform: translateY(-2px);
+    border-color: var(--gold-accent);
+    color: var(--ink-accent);
+  }
+  .control-btn.active {
+    background: var(--ink-dark); color: var(--paper-light);
+  }
+
+  /* ============================================================
+     3D BOOKLET STAGE & CONTAINER
+     ============================================================ */
+  .booklet-viewport {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    perspective: 1800px;
+    padding: 20px;
+  }
+
+  /* The 3D Book Frame */
+  .book-3d-wrapper {
+    position: relative;
+    width: 360px; height: 530px;
+    transform-style: preserve-3d;
+    transform: rotateX(8deg) rotateY(-18deg) rotateZ(1deg);
+    transition: transform 0.8s var(--ease-smooth), filter 0.8s ease;
+    filter: drop-shadow(-25px 35px 45px rgba(0,0,0,0.65));
+    cursor: pointer;
+  }
+  .book-3d-wrapper:hover {
+    transform: rotateX(4deg) rotateY(-10deg) translateY(-8px);
+    filter: drop-shadow(-30px 45px 55px rgba(0,0,0,0.55));
+  }
+  .book-3d-wrapper.opened {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    cursor: default;
+  }
+
+  /* Book Spine */
+  .book-spine-3d {
+    position: absolute; left: -24px; top: 0; width: 24px; height: 100%;
+    background: linear-gradient(to right, #4a3825, #7a5a36 40%, #5c4428 80%, #38291a);
+    transform-origin: right center;
+    transform: rotateY(-90deg);
+    border-radius: 4px 0 0 4px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  }
+  .spine-title {
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px; letter-spacing: 0.35em; color: var(--paper-light);
+    opacity: 0.85; text-transform: uppercase;
+  }
+
+  /* Book Pages Stack Thickness */
+  .book-pages-stack {
+    position: absolute; right: -12px; top: 6px; width: 12px; height: 518px;
+    background: repeating-linear-gradient(to bottom,
+      #f5eee4 0px, #f5eee4 2px,
+      #d9cbb7 2px, #d9cbb7 4px);
+    border-radius: 0 3px 3px 0;
+    box-shadow: inset 2px 0 5px rgba(0,0,0,0.3);
+  }
+
+  /* Decorative Ribbon / Twine Rope Bow */
+  .twine-bow-overlay {
+    position: absolute; top: 38px; right: -18px; z-index: 50;
+    pointer-events: none; transition: all 1s var(--ease-smooth);
+    filter: drop-shadow(2px 6px 8px rgba(0,0,0,0.4));
+  }
+  .book-3d-wrapper.opened .twine-bow-overlay {
+    opacity: 0; transform: translateY(-40px) scale(0.8);
+  }
+
+  /* ============================================================
+     BOOKLET PAGES & DECKLE EDGE DESIGN
+     ============================================================ */
+  .book-page {
+    position: absolute; inset: 0;
+    background: var(--paper-base);
+    border-radius: 4px;
+    box-shadow: inset 0 0 30px rgba(140, 106, 67, 0.12), 0 5px 25px rgba(0,0,0,0.2);
+    overflow: hidden;
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    backface-visibility: hidden;
+  }
+
+  /* Deckle-Edge Torn Paper Border Effect */
+  .deckle-border {
+    position: absolute; inset: 12px;
+    border: 1px solid var(--border-line);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .deckle-border::after {
+    content: ''; position: absolute; inset: -4px;
+    border: 1px stroke var(--gold-accent);
+    opacity: 0.4;
+  }
+
+  /* Paper Texture Background Overlay */
+  .paper-texture {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.45;
+    background-image: radial-gradient(var(--twine) 0.5px, transparent 0.5px), radial-gradient(var(--ink-dark) 0.5px, var(--paper-base) 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    mix-blend-mode: multiply;
+  }
+
+  /* Floral Stem Graphic Illustration */
+  .botanical-stem {
+    position: absolute; bottom: 15px; right: 15px; width: 140px; height: auto;
+    pointer-events: none; opacity: 0.85; filter: drop-shadow(2px 4px 6px rgba(90,66,36,0.15));
+  }
+
+  /* ---------- Page Specific Contents ---------- */
+  
+  /* --- COVER PAGE --- */
+  .cover-content {
+    height: 100%; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 30px; text-align: center; position: relative; z-index: 5;
+  }
+
+  .quran-header-arabic {
+    font-family: 'Amiri', serif; font-size: 24px; color: var(--ink-dark);
+    margin-bottom: 6px; font-weight: 700; line-height: 1.6;
+  }
+  .quran-translation {
+    font-size: 13px; font-style: italic; color: var(--ink-mid);
+    margin-bottom: 4px; font-family: 'Cormorant Garamond', serif;
+  }
+  .quran-surah {
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-accent); margin-bottom: 22px; opacity: 0.8;
+  }
+
+  .ornament-divider {
+    display: flex; align-items: center; gap: 12px; width: 80%; margin: 12px auto;
+  }
+  .ornament-line { flex: 1; height: 1px; background: var(--gold-accent); opacity: 0.6; }
+  .ornament-flower { font-size: 12px; color: var(--gold-accent); }
+
+  .eyebrow-label {
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--ink-accent); margin-top: 10px; margin-bottom: 12px;
+  }
+
+  .couple-title-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 46px; font-weight: 500; color: var(--ink-dark);
+    line-height: 1.05; margin: 10px 0;
+  }
+  .couple-ampersand {
+    font-family: 'Alex Brush', cursive; font-size: 42px; color: var(--gold-accent);
+    display: block; margin: -5px 0; font-weight: 400;
+  }
+
+  .cover-tap-prompt {
+    margin-top: 30px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    cursor: pointer; animation: pulseGentle 2.5s infinite ease-in-out;
+  }
+  .tap-seal-btn {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #d4ab6e, #8c6a43 70%, #4a3825);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 18px rgba(74, 56, 37, 0.4), inset 0 2px 4px rgba(255,255,255,0.4);
+    border: 1px solid var(--gold-bright);
+    color: var(--paper-light); font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600;
+  }
+  .tap-text {
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-accent);
+  }
+
+  @keyframes pulseGentle {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+
+  /* ============================================================
+     INSIDE PAGES (Booklet Spread Layout)
+     ============================================================ */
+  .page-inner-content {
+    height: 100%; padding: 40px 28px; display: flex; flex-direction: column;
+    justify-content: space-between; position: relative; z-index: 5; text-align: center;
+  }
+
+  .page-number-tag {
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--ink-accent); opacity: 0.6; margin-bottom: 10px;
+  }
+
+  .section-heading-serif {
+    font-family: 'Cormorant Garamond', serif; font-size: 28px;
+    font-style: italic; color: var(--ink-dark); margin-bottom: 6px;
+  }
+
+  /* Event Details Card Box */
+  .event-card-box {
+    background: rgba(239, 229, 213, 0.6);
+    border: 1px solid var(--border-line);
+    border-radius: 6px; padding: 20px 16px; margin: 12px 0;
+    position: relative;
+  }
+  .event-title-badge {
+    font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink-accent); margin-bottom: 12px;
+    display: inline-block; padding-bottom: 4px; border-bottom: 1px solid var(--gold-accent);
+  }
+
+  .event-datetime-grid {
+    display: flex; justify-content: center; align-items: center; gap: 12px;
+    margin: 12px 0;
+  }
+  .datetime-col { text-align: center; }
+  .datetime-col .day-name { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
+  .datetime-col .date-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600; color: var(--ink-dark); line-height: 1; }
+  .datetime-col .month-year { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-mid); }
+  .datetime-col .time-text { font-size: 12px; font-weight: 500; color: var(--ink-dark); }
+  .datetime-divider { width: 1px; height: 36px; background: var(--border-line); }
+
+  .location-venue-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600;
+    color: var(--ink-dark); margin-top: 8px;
+  }
+  .location-address {
+    font-size: 12px; color: var(--ink-mid); margin-top: 4px; line-height: 1.4;
+  }
+
+  /* Live Countdown Grid */
+  .countdown-row {
+    display: flex; justify-content: center; gap: 8px; margin: 15px 0;
+  }
+  .cd-box {
+    width: 62px; padding: 10px 4px; background: var(--paper-light);
+    border: 1px solid var(--border-line); border-radius: 4px;
+  }
+  .cd-val { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--ink-dark); }
+  .cd-lbl { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-accent); }
+
+  /* Map & QR Section */
+  .qr-code-wrapper {
+    margin: 10px auto; text-align: center;
+  }
+  .qr-img {
+    width: 100px; height: 100px; border-radius: 6px; border: 2px solid var(--ink-mid);
+    padding: 4px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .map-link-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 10px; padding: 10px 22px; border-radius: 25px;
+    background: var(--ink-dark); color: var(--paper-light);
+    text-decoration: none; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    transition: all 0.3s var(--ease-smooth);
+  }
+  .map-link-btn:hover {
+    background: var(--ink-accent); transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(74, 56, 37, 0.3);
+  }
+
+  /* Page Controls / Navigation Bar */
+  .booklet-nav-bar {
+    position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+    z-index: 90; display: flex; align-items: center; gap: 15px;
+    background: rgba(28, 23, 19, 0.85); padding: 8px 20px; border-radius: 40px;
+    border: 1px solid rgba(212, 171, 110, 0.3); backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); opacity: 0; pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .booklet-nav-bar.visible { opacity: 1; pointer-events: auto; }
+
+  .nav-arrow-btn {
+    background: transparent; border: none; color: var(--paper-light);
+    font-size: 18px; cursor: pointer; padding: 4px 10px; border-radius: 50%;
+    transition: all 0.25s ease;
+  }
+  .nav-arrow-btn:hover { color: var(--gold-bright); transform: scale(1.2); }
+  .page-indicator-text {
+    font-size: 11px; letter-spacing: 0.2em; color: var(--paper-light); font-family: 'Jost', sans-serif;
+  }
+
+  /* Responsive Adjustments & Touch Optimizations */
+  @media (max-width: 768px) {
+    .top-controls { top: 12px; right: 12px; }
+    [dir="rtl"] .top-controls { left: 12px; }
+    .control-btn { padding: 6px 12px; font-size: 11px; }
+
+    .book-3d-wrapper {
+      width: clamp(280px, 86vw, 340px);
+      height: clamp(440px, 72vh, 520px);
+    }
+    
+    .cover-content, .page-inner-content { padding: 28px 18px; }
+    .couple-title-main { font-size: clamp(32px, 8vw, 42px); }
+    .quran-header-arabic { font-size: clamp(18px, 5vw, 22px); }
+    .section-heading-serif { font-size: 24px; }
+    
+    .event-card-box { padding: 12px 8px; margin: 8px 0; }
+    .event-datetime-grid { gap: 8px; margin: 8px 0; }
+    .datetime-col .date-num { font-size: 26px; }
+    .datetime-col .month-year, .datetime-col .day-name { font-size: 9px; }
+    .location-venue-name { font-size: 16px; }
+
+    .countdown-row { gap: 6px; margin: 10px 0; }
+    .cd-box { width: 50px; padding: 6px 2px; }
+    .cd-val { font-size: 18px; }
+    .cd-lbl { font-size: 7px; }
+
+    .qr-img { width: 80px; height: 80px; }
+    .map-link-btn { padding: 8px 18px; font-size: 10px; }
+
+    .botanical-stem { width: 100px; opacity: 0.7; }
+    .booklet-nav-bar { bottom: 15px; padding: 6px 16px; gap: 10px; }
+  }
+
+  @media (max-height: 600px) {
+    .book-3d-wrapper { height: 420px; }
+    .cover-content, .page-inner-content { padding: 20px 14px; }
+    .quran-surah { margin-bottom: 10px; }
+    .cover-tap-prompt { margin-top: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Ambient Stage Particle Canvas -->
+<canvas id="stage-particles"></canvas>
+<div class="stage-light"></div>
+
+<!-- Floating Design Switcher -->
+<div class="design-switcher-bar" style="position: fixed; top: 20px; left: 20px; z-index: 100; display: flex; gap: 6px; background: rgba(28, 23, 19, 0.85); padding: 4px; border-radius: 30px; border: 1px solid rgba(212,171,110,0.3); backdrop-filter: blur(10px);">
+  <a class="design-link active" href="design-1-booklet.html" style="color: var(--paper-base); text-decoration: none; font-size: 11px; padding: 6px 14px; border-radius: 20px; background: var(--gold-accent);">1. 3D Booklet</a>
+  <a class="design-link" href="design-2-envelope-scroll.html" style="color: var(--paper-base); text-decoration: none; font-size: 11px; padding: 6px 14px; border-radius: 20px;">2. Royal Envelope</a>
+  <a class="design-link" href="design-3-card-stack.html" style="color: var(--paper-base); text-decoration: none; font-size: 11px; padding: 6px 14px; border-radius: 20px;">3. Card Folio Deck</a>
+</div>
+
+<!-- Top Controls Bar -->
+<div class="top-controls">
+  <button class="control-btn" id="audioToggle" onclick="toggleAudio()">
+    <span id="audioIcon">🎵</span> <span id="audioLabel">Music</span>
+  </button>
+  <button class="control-btn" id="langBtnEn" onclick="setLanguage('en')">EN</button>
+  <button class="control-btn" id="langBtnAr" onclick="setLanguage('ar')">ع</button>
+</div>
+
+<!-- ============================================================
+     3D BOOKLET CONTAINER
+     ============================================================ -->
+<div class="booklet-viewport">
+
+  <div class="book-3d-wrapper" id="bookWrapper">
+    <!-- Spine -->
+    <div class="book-spine-3d">
+      <div class="spine-title">FAEIZ &amp; RHIYA · WEDDING FOLIO</div>
+    </div>
+
+    <!-- Page Thickness -->
+    <div class="book-pages-stack"></div>
+
+    <!-- Decorative Twine Bow -->
+    <div class="twine-bow-overlay">
+      <svg width="70" height="70" viewBox="0 0 100 100" fill="none">
+        <path d="M50 50 C20 20, 10 60, 50 50 C90 60, 80 20, 50 50 Z" stroke="#a68b63" stroke-width="6" fill="none"/>
+        <path d="M50 50 C30 70, 15 90, 25 95" stroke="#a68b63" stroke-width="5" stroke-linecap="round"/>
+        <path d="M50 50 C70 70, 85 90, 75 95" stroke="#a68b63" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="50" cy="50" r="7" fill="#7a6341"/>
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         PAGE 4 (BACK COVER / VENUE MAP & QR)
+         ============================================================ -->
+    <div class="book-page" id="page4" style="z-index: 1;">
+      <div class="paper-texture"></div>
+      <div class="deckle-border"></div>
+      
+      <div class="page-inner-content">
+        <div>
+          <div class="page-number-tag">PAGE IV · LOCATION</div>
+          <div class="section-heading-serif" data-en="Venue &amp; Directions" data-ar="موقع الحفل والاتجاهات">Venue &amp; Directions</div>
+          <div class="ornament-divider">
+            <div class="ornament-line"></div>
+            <div class="ornament-flower">❀</div>
+            <div class="ornament-line"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="event-card-box">
+            <div class="event-title-badge" data-en="SCAN FOR LOCATION" data-ar="امسح الرمز للموقع">SCAN FOR LOCATION</div>
+            
+            <!-- Dynamic Inline SVG QR Code -->
+            <div class="qr-code-wrapper">
+              <svg class="qr-img" viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#ffffff"/>
+                <!-- QR Corner 1 -->
+                <rect x="10" y="10" width="25" height="25" fill="#4a3825"/>
+                <rect x="14" y="14" width="17" height="17" fill="#ffffff"/>
+                <rect x="18" y="18" width="9" height="9" fill="#4a3825"/>
+                <!-- QR Corner 2 -->
+                <rect x="65" y="10" width="25" height="25" fill="#4a3825"/>
+                <rect x="69" y="14" width="17" height="17" fill="#ffffff"/>
+                <rect x="73" y="18" width="9" height="9" fill="#4a3825"/>
+                <!-- QR Corner 3 -->
+                <rect x="10" y="65" width="25" height="25" fill="#4a3825"/>
+                <rect x="14" y="69" width="17" height="17" fill="#ffffff"/>
+                <rect x="18" y="73" width="9" height="9" fill="#4a3825"/>
+                <!-- Data Pattern Dots -->
+                <rect x="42" y="12" width="6" height="6" fill="#4a3825"/>
+                <rect x="52" y="18" width="6" height="6" fill="#4a3825"/>
+                <rect x="42" y="28" width="6" height="6" fill="#4a3825"/>
+                <rect x="12" y="42" width="6" height="6" fill="#4a3825"/>
+                <rect x="24" y="48" width="6" height="6" fill="#4a3825"/>
+                <rect x="42" y="42" width="16" height="16" fill="#4a3825"/>
+                <rect x="65" y="42" width="8" height="8" fill="#4a3825"/>
+                <rect x="78" y="48" width="8" height="8" fill="#4a3825"/>
+                <rect x="42" y="65" width="8" height="8" fill="#4a3825"/>
+                <rect x="55" y="72" width="8" height="8" fill="#4a3825"/>
+                <rect x="70" y="65" width="18" height="18" fill="#4a3825"/>
+                <rect x="74" y="69" width="10" height="10" fill="#ffffff"/>
+              </svg>
+            </div>
+
+            <div class="location-address" data-en="Chemmatila &amp; Zainaba Manil<br>Kunhimangalam, Kannur" data-ar="شمطيلة وزينبة منيل<br>كونهيمانجالام، كانور">
+              Chemmatila &amp; Zainaba Manil<br>Kunhimangalam, Kannur
+            </div>
+
+            <a class="map-link-btn" href="https://maps.google.com" target="_blank" rel="noopener">
+              <span>📍</span> <span data-en="Open Google Maps" data-ar="افتح خرائط جوجل">Open Google Maps</span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="script" style="font-size: 26px; color: var(--gold-accent);">Insha'Allah</div>
+          <div style="font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-mid); margin-top: 4px;" data-en="LOOKING FORWARD TO CELEBRATING WITH YOU" data-ar="نتطلع للاحتفال معكم">
+            LOOKING FORWARD TO CELEBRATING WITH YOU
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PAGE 3 (RECEPTION DETAILS & COUNTDOWN)
+         ============================================================ -->
+    <div class="book-page" id="page3" style="z-index: 2;">
+      <div class="paper-texture"></div>
+      <div class="deckle-border"></div>
+
+      <div class="page-inner-content">
+        <div>
+          <div class="page-number-tag">PAGE III · RECEPTION</div>
+          <div class="section-heading-serif" data-en="Wedding Reception" data-ar="حفل الاستقبال">Wedding Reception</div>
+          <div class="ornament-divider">
+            <div class="ornament-line"></div>
+            <div class="ornament-flower">❀</div>
+            <div class="ornament-line"></div>
+          </div>
+        </div>
+
+        <div class="event-card-box">
+          <div class="event-title-badge" data-en="RECEPTION AT" data-ar="موقع الاستقبال">RECEPTION AT</div>
+
+          <div class="event-datetime-grid">
+            <div class="datetime-col">
+              <div class="day-name" data-en="SUNDAY" data-ar="الأحد">SUNDAY</div>
+              <div class="date-num">16</div>
+            </div>
+            <div class="datetime-divider"></div>
+            <div class="datetime-col">
+              <div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div>
+              <div class="time-text" data-en="AT 12:00 PM" data-ar="الساعة ١٢:٠٠ ظهراً">AT 12:00 PM</div>
+            </div>
+          </div>
+
+          <div class="location-venue-name" data-en="Zainaba Manil" data-ar="زينبة منيل">Zainaba Manil</div>
+          <div class="location-address" data-en="Angadi, Kunhimangalam, Kannur" data-ar="عنقادي، كونهيمانجالام، كانور">
+            Angadi, Kunhimangalam, Kannur
+          </div>
+        </div>
+
+        <!-- Live Countdown -->
+        <div>
+          <div style="font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-accent);" data-en="COUNTDOWN TO CELEBRATION" data-ar="العد التنازلي للحفل">
+            COUNTDOWN TO CELEBRATION
+          </div>
+          <div class="countdown-row">
+            <div class="cd-box"><div class="cd-val" id="cd-days">00</div><div class="cd-lbl" data-en="DAYS" data-ar="أيام">DAYS</div></div>
+            <div class="cd-box"><div class="cd-val" id="cd-hours">00</div><div class="cd-lbl" data-en="HOURS" data-ar="ساعات">HOURS</div></div>
+            <div class="cd-box"><div class="cd-val" id="cd-mins">00</div><div class="cd-lbl" data-en="MINS" data-ar="دقائق">MINS</div></div>
+            <div class="cd-box"><div class="cd-val" id="cd-secs">00</div><div class="cd-lbl" data-en="SECS" data-ar="ثواني">SECS</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PAGE 2 (NIKAH CEREMONY DETAILS)
+         ============================================================ -->
+    <div class="book-page" id="page2" style="z-index: 3;">
+      <div class="paper-texture"></div>
+      <div class="deckle-border"></div>
+
+      <div class="page-inner-content">
+        <div>
+          <div class="page-number-tag">PAGE II · NIKAH</div>
+          <div class="eyebrow-label" data-en="REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR NIKAH CEREMONY" data-ar="يتشرفون بدعوتكم لحضور حفل النكاح">
+            REQUEST THE HONOUR OF YOUR PRESENCE AT THEIR NIKAH CEREMONY
+          </div>
+          <div class="ornament-divider">
+            <div class="ornament-line"></div>
+            <div class="ornament-flower">❀</div>
+            <div class="ornament-line"></div>
+          </div>
+        </div>
+
+        <div class="event-card-box">
+          <div class="event-title-badge" data-en="NIKAH AT" data-ar="حفل النكاح في">NIKAH AT</div>
+
+          <div class="event-datetime-grid">
+            <div class="datetime-col">
+              <div class="day-name" data-en="FRIDAY" data-ar="الجمعة">FRIDAY</div>
+              <div class="date-num">14</div>
+            </div>
+            <div class="datetime-divider"></div>
+            <div class="datetime-col">
+              <div class="month-year" data-en="AUGUST 2026" data-ar="أغسطس ٢٠٢٦">AUGUST 2026</div>
+              <div class="time-text" data-en="AT 4:00 PM" data-ar="الساعة ٤:٠٠ عصراً">AT 4:00 PM</div>
+            </div>
+          </div>
+
+          <div class="location-venue-name" data-en="Chemmatila Juma Masjid" data-ar="جامع شمطيلة">Chemmatila Juma Masjid</div>
+          <div class="location-address" data-en="Kunhimangalam, Kannur" data-ar="كونهيمانجالام، كانور">
+            Kunhimangalam, Kannur
+          </div>
+        </div>
+
+        <div>
+          <div class="script" style="font-size: 32px; color: var(--gold-accent);">Faeiz &amp; Rhiya</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         PAGE 1 (COVER PAGE)
+         ============================================================ -->
+    <div class="book-page" id="page1" style="z-index: 4;" onclick="openNextPage()">
+      <div class="paper-texture"></div>
+      <div class="deckle-border"></div>
+
+      <!-- Dried Botanical Flower Branch SVG -->
+      <svg class="botanical-stem" viewBox="0 0 120 220" fill="none">
+        <path d="M60 210 Q50 140 70 20 Q75 10 80 5" stroke="#a68b63" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Branchlets and Baby's Breath Flowers -->
+        <path d="M63 150 Q40 130 25 120" stroke="#a68b63" stroke-width="1.5"/>
+        <circle cx="23" cy="118" r="4" fill="#d4ab6e"/>
+        <circle cx="18" cy="124" r="3" fill="#efe5d5"/>
+        <circle cx="28" cy="126" r="3.5" fill="#d4ab6e"/>
+
+        <path d="M66 110 Q85 95 98 85" stroke="#a68b63" stroke-width="1.5"/>
+        <circle cx="100" cy="83" r="4.5" fill="#d4ab6e"/>
+        <circle cx="104" cy="89" r="3" fill="#efe5d5"/>
+
+        <path d="M68 70 Q45 55 35 45" stroke="#a68b63" stroke-width="1.5"/>
+        <circle cx="33" cy="43" r="4" fill="#d4ab6e"/>
+        <circle cx="39" cy="40" r="3" fill="#efe5d5"/>
+
+        <circle cx="82" cy="7" r="4.5" fill="#d4ab6e"/>
+        <circle cx="76" cy="3" r="3" fill="#efe5d5"/>
+      </svg>
+
+      <div class="cover-content">
+        <div class="quran-header-arabic">وَخَلَقْنَاكُمْ أَزْوَاجًا</div>
+        <div class="quran-translation">"And We created you in pairs."</div>
+        <div class="quran-surah">(Surah An-Naba 78:8)</div>
+
+        <div class="ornament-divider">
+          <div class="ornament-line"></div>
+          <div class="ornament-flower">❀</div>
+          <div class="ornament-line"></div>
+        </div>
+
+        <div class="eyebrow-label" data-en="TOGETHER WITH THEIR FAMILIES" data-ar="مع عائلتيهما الكريمتين">
+          TOGETHER WITH THEIR FAMILIES
+        </div>
+
+        <div class="couple-title-main">
+          Faeiz
+          <span class="couple-ampersand">&amp;</span>
+          Rhiya
+        </div>
+
+        <div class="cover-tap-prompt">
+          <div class="tap-seal-btn">F&amp;R</div>
+          <div class="tap-text" data-en="TAP TO OPEN FOLIO" data-ar="انقر لفتح الدعوة">TAP TO OPEN FOLIO</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /book-3d-wrapper -->
+
+</div><!-- /booklet-viewport -->
+
+<!-- Bottom Navigation Bar -->
+<div class="booklet-nav-bar" id="navBar">
+  <button class="nav-arrow-btn" onclick="prevPage()">❮</button>
+  <div class="page-indicator-text" id="pageIndicator">PAGE 1 OF 4</div>
+  <button class="nav-arrow-btn" onclick="nextPage()">❯</button>
+</div>
+
+<!-- Ambient Audio Element -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=soft-piano-wedding-114154.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Target Wedding Date (Reception Date)
+  const WEDDING_DATE_ISO = "2026-08-16T12:00:00";
+  
+  let currentPage = 1;
+  const totalPages = 4;
+  let isAudioPlaying = false;
+
+  // Background Particles Engine
+  (function initStageParticles() {
+    const canvas = document.getElementById('stage-particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const COLORS = ['rgba(212,171,110,', 'rgba(166,139,99,', 'rgba(239,229,213,'];
+
+    function createParticle() {
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H + H,
+        r: Math.random() * 2 + 0.5,
+        speed: Math.random() * 0.4 + 0.15,
+        drift: (Math.random() - 0.5) * 0.3,
+        alpha: Math.random() * 0.5 + 0.2,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)]
+      };
+    }
+
+    for (let i = 0; i < 50; i++) {
+      const p = createParticle();
+      p.y = Math.random() * H;
+      particles.push(p);
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.y -= p.speed;
+        p.x += p.drift;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + p.alpha + ')';
+        ctx.fill();
+        if (p.y < -10) Object.assign(p, createParticle());
+      });
+      requestAnimationFrame(render);
+    }
+    render();
+  })();
+
+  // 3D Parallax Effect on Mouse Move
+  document.addEventListener('mousemove', (e) => {
+    const wrapper = document.getElementById('bookWrapper');
+    if (!wrapper || wrapper.classList.contains('opened')) return;
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const dx = (e.clientX - cx) / cx;
+    const dy = (e.clientY - cy) / cy;
+    wrapper.style.transform = `rotateX(${8 - dy * 6}deg) rotateY(${-18 + dx * 10}deg)`;
+  });
+
+  // Open First Cover Page
+  function openNextPage() {
+    if (currentPage === 1) {
+      document.getElementById('bookWrapper').classList.add('opened');
+      document.getElementById('navBar').classList.add('visible');
+      nextPage();
+    }
+  }
+
+  function updatePageFlips() {
+    for (let i = 1; i <= totalPages; i++) {
+      const pageEl = document.getElementById(`page${i}`);
+      if (i < currentPage) {
+        // Flipped over to left
+        pageEl.style.transform = 'rotateY(-165deg)';
+      } else {
+        // Stacked on right
+        pageEl.style.transform = 'rotateY(0deg)';
+      }
+    }
+    document.getElementById('pageIndicator').textContent = `PAGE ${currentPage} OF ${totalPages}`;
+  }
+
+  function nextPage() {
+    if (currentPage < totalPages) {
+      currentPage++;
+      updatePageFlips();
+    }
+  }
+
+  function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      updatePageFlips();
+      if (currentPage === 1) {
+        document.getElementById('bookWrapper').classList.remove('opened');
+      }
+    }
+  }
+
+  // Keyboard Arrow Navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextPage();
+    if (e.key === 'ArrowLeft') prevPage();
+  });
+
+  // Audio Ambient Toggle
+  function toggleAudio() {
+    const audio = document.getElementById('bgMusic');
+    const label = document.getElementById('audioLabel');
+    if (isAudioPlaying) {
+      audio.pause();
+      label.textContent = "Music";
+      isAudioPlaying = false;
+    } else {
+      audio.play().catch(() => {});
+      label.textContent = "Playing";
+      isAudioPlaying = true;
+    }
+  }
+
+  // Language Switcher
+  function setLanguage(lang) {
+    const html = document.getElementById('htmlRoot');
+    const isAr = lang === 'ar';
+    html.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+    html.setAttribute('lang', isAr ? 'ar' : 'en');
+    
+    document.getElementById('langBtnEn').classList.toggle('active', !isAr);
+    document.getElementById('langBtnAr').classList.toggle('active', isAr);
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.innerHTML = isAr ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+    });
+  }
+
+  // Countdown Timer
+  function tickCountdown() {
+    const target = new Date(WEDDING_DATE_ISO).getTime();
+    const now = Date.now();
+    let diff = Math.max(0, target - now);
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById('cd-days').textContent = String(d).padStart(2, '0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2, '0');
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+  // Touch Swipe Gesture Handling for Mobile
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const bookWrapper = document.getElementById('bookWrapper');
+
+  bookWrapper.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  bookWrapper.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    const touchEndY = e.changedTouches[0].screenY;
+    const dx = touchEndX - touchStartX;
+    const dy = touchEndY - touchStartY;
+
+    // Horizonal swipe with minimal vertical movement threshold
+    if (Math.abs(dx) > 40 && Math.abs(dy) < 80) {
+      if (dx < 0) {
+        // Swiped Left -> Next Page
+        if (currentPage === 1) openNextPage();
+        else nextPage();
+      } else {
+        // Swiped Right -> Previous Page
+        prevPage();
+      }
+    }
+  }, { passive: true });
+</script>
+
+</body>
+</html>
