@@ -194,36 +194,16 @@
     color: var(--ink-accent); margin: 6px 0; font-weight: 400;
   }
 
-  /* Luxury Glowing Fluid Shimmer Gold Text Effect for Cover Names */
+  /* Elegant Solid Cover Names */
   .couple-title-main {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 50px; font-weight: 600;
+    font-size: 48px; font-weight: 500; color: var(--ink-dark);
     line-height: 1.05; margin: 6px 0;
-    background: linear-gradient(135deg, #4a3825 0%, #b08953 25%, #fff3db 50%, #d4ab6e 75%, #4a3825 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: goldFluidShimmer 6s ease-in-out infinite alternate;
-    text-shadow: 0 0 20px rgba(212, 171, 110, 0.25);
-    filter: drop-shadow(0 2px 8px rgba(176, 137, 83, 0.3));
   }
 
   .couple-ampersand {
-    font-family: 'Alex Brush', cursive; font-size: 46px;
+    font-family: 'Alex Brush', cursive; font-size: 44px; color: var(--gold-accent);
     display: block; margin: -6px 0; font-weight: 400;
-    color: var(--gold-bright);
-    text-shadow: 0 0 12px rgba(212, 171, 110, 0.6), 0 0 25px rgba(212, 171, 110, 0.3);
-    animation: goldPulseGlow 3s ease-in-out infinite alternate;
-  }
-
-  @keyframes goldFluidShimmer {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
-  }
-
-  @keyframes goldPulseGlow {
-    0% { filter: drop-shadow(0 0 2px rgba(212, 171, 110, 0.4)); }
-    100% { filter: drop-shadow(0 0 10px rgba(212, 171, 110, 0.8)); }
   }
 
   /* Bouncing Scroll Cue on Cover */
